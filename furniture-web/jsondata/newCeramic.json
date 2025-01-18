@@ -1,0 +1,75 @@
+[
+    {
+        "id": "1",
+        "img": "/newCeramics/ceramic1.svg",
+        "title": "The Dandy chair",
+        "price":"£250"
+    },
+    {
+        "id": "2",
+        "img": "/newCeramics/ceramic2.svg",
+        "title": "Rustic Vase Set",
+        "price":"£155"
+    },
+    {
+        "id": "3",
+        "img": "/newCeramics/ceramic3.svg",
+        "title": "The Silky Vase",
+        "price":"£125"
+    },
+    {
+        "id": "4",
+        "img": "/newCeramics/ceramic4.svg",
+        "title": "The Lucy Lamp",
+        "price":"£399"
+    },
+    {
+        "id": "5",
+        "img": "/newCeramics/ceramic5.svg",
+        "title": "The Dandy chair",
+        "price":"£250"
+    },
+    {
+        "id": "6",
+        "img": "/newCeramics/ceramic6.svg",
+        "title": "The Dandy chair",
+        "price":"£250"
+    },
+    {
+        "id": "7",
+        "img": "/newCeramics/ceramic7.svg",
+        "title": "The Dandy chair",
+        "price":"£250"
+    },
+    {
+        "id": "8",    
+        "img": "/newCeramics/ceramic8.svg",
+        "title": "The Dandy chair",
+        "price":"£250"
+    },
+    {
+        "id": "9",
+        "img": "/popularProduct/product3.svg",
+        "title": "The Dandy chair",
+        "price":"£250"
+    },
+    {
+       
+        "id": "10",
+        "img": "/popularProduct/product4.svg",
+        "title": "The Dandy chair",
+        "price":"£250"
+    },
+    {
+        "id": "11",
+        "img": "/popularProduct/product2.svg",
+        "title": "The Dandy chair",
+        "price":"£250"
+    },
+    {
+        "id": "12",
+        "img": "/newCeramics/ceramic4.svg",
+        "title": "The Lucy Lamp",
+        "price":"£399"
+    }
+]
