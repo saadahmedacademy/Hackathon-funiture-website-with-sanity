@@ -1,10 +1,18 @@
 import Image from "next/image";
 import React from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
-import newCeramic from "@/jsondata/newCeramic.json";
 import Link from "next/link";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 
-export default function Page() {
+export default async function Page() {
+
+    const query = `*[_type == "product"]{
+    name, price, _id ,image
+    }`;
+    
+   const fatchData = await client.fetch(query);
+
   return (
     <main className="w-full">
       <section className="w-full h-[209px] relative">
@@ -73,24 +81,26 @@ export default function Page() {
       </section>
 
       <section className="sm:container mx-auto w-full md:px-0 px-2 py-4">
-        <div className="w-full grid grid-cols-2 md:grid-rows-3 grid-rows-4 md:grid-cols-4 gap-6">
-          {newCeramic.map((ceramic, index) => (
-            <Link href={`/product-detail/${ceramic.id}`} key={ceramic.id}>
+        <div className="w-full grid grid-cols-2 md:grid-rows-3 grid-rows-4 md:grid-cols-4 gap-y-16 gap-6">
+          {fatchData.map((ceramic : any) => (
+            <Link href={`/product-detail/${ceramic._id}`} key={ceramic.id}>
             <div
-              key={index}
-              className="flex flex-col gap-4 items-start text-gray-600"
+              key={ceramic._id}
+              className="flex flex-col gap-4 items-start text-gray-600 h-[460px]"
             >
+                <div className="h-[378px] w-[305px]">
               {/* Ceramic Image */}
               <Image
-                src={`${ceramic.img}`}
-                alt={ceramic.title}
+                src={`${urlFor(ceramic.image)}`}
+                alt={ceramic.name}
                 width={305}
                 height={375}
-                className="rounded-lg shadow-sm"
+                className="rounded-lg shadow-sm h-full"
               />
+                </div>
 
               {/* Ceramic Title */}
-              <p className="text-lg font-medium">{ceramic.title}</p>
+              <p className="text-lg font-medium">{ceramic.name}</p>
 
               {/* Ceramic Price */}
               <p className="text-lg font-semibold">{ceramic.price}</p>

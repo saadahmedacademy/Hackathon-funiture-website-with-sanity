@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 export const HeroBlock = () => {
@@ -13,9 +14,11 @@ export const HeroBlock = () => {
             <br className="hidden md:block" />
             with timeless designs
           </p>
+          <Link href="/productlisting">
           <button className="md:block hidden bg-[#F9F9F926] py-3 px-10 md:py-4 md:px-6 hover:bg-[#ffffff26] transition-colors">
             View collection
           </button>
+          </Link>
         </div>
 
         <div className="pb-7 max-w-full md:max-w-[602px]">

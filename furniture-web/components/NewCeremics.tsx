@@ -7,7 +7,7 @@ import { urlFor } from "@/sanity/lib/image";
 export const NewCeremics = async () => {
   
   const query = `*[_type == "product"][2..5] {
-  name, price, _id ,image, title
+  name, price, _id ,image
   }`;
   
   const fatchData = await client.fetch(query);
@@ -46,9 +46,11 @@ export const NewCeremics = async () => {
 
       {/* View Collection Button */}
       <div className="pt-10 mx-auto">
+        <Link href={`/productlisting`}>
         <button className="px-6 py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-800 transition-all">
           View collection
         </button>
+        </Link>
       </div>
     </main>
   );

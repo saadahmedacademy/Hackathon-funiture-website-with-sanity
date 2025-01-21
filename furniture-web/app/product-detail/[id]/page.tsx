@@ -60,7 +60,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           {/* Title and Price */}
           <div className="w-full flex flex-col gap-1 text-left">
             <p className="text-2xl md:text-3xl text-black">{fetchData.name}</p>
-            <p className="text-xl font-semibold">{fetchData.price}</p>
+            <p className="text-xl font-semibold">Price : {fetchData.price}$</p>
           </div>
 
           {/* Description */}

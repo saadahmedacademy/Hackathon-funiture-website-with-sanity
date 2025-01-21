@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import popularProduct from "@/jsondata/popularProduct.json";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import Link from "next/link";
@@ -53,9 +52,11 @@ export const PopularProduct = async () => {
 
       {/* View Collection Button */}
       <div className="pt-8 mx-auto">
+        <Link href={`/productlisting`}>
         <button className="px-6 py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors">
           View collection
         </button>
+        </Link>
       </div>
     </main>
   );
