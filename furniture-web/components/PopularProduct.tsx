@@ -1,8 +1,18 @@
 import Image from "next/image";
 import React from "react";
 import popularProduct from "@/jsondata/popularProduct.json";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import Link from "next/link";
 
-export const PopularProduct = () => {
+export const PopularProduct = async () => {
+
+  const query = `*[_type == "product"][6..9] {
+   name, price, _id ,image, title
+   }`;
+   
+   const fatchData = await client.fetch(query);
+
   return (
     <main className="md:container md:mx-auto w-full flex flex-col gap-6 py-16 px-4">
       {/* Section Heading */}
@@ -12,30 +22,34 @@ export const PopularProduct = () => {
 
       {/* Responsive Scrollable Layout */}
       <div className="w-full flex justify-start items-center gap-4  overflow-x-auto scroll-smooth scrollbar-hide popular-product">
-        {popularProduct.map((product) => (
+        {fatchData.map((product:any) => (
+      <Link href={`/product-detail/${product._id}`} key={product._id}>
+
           <div
-            key={product.id}
+            key={product._id}
             className="flex flex-col gap-4 items-start text-gray-600 shrink-0 snap-start"
           >
             {/* Product Image */}
-            <div className="h-[375px]">
+            <div className="h-[375px] w-[305px]">
             <Image
-              src={`${product.img}`}
-              alt={product.title}
+              src={`${urlFor(product.image)}`}
+              alt={product.name}
               width={305}
               height={375}
-              className="w-full h-full object-cover object-center hover:scale-105 transition-transform"
+              className="w-full h-full rounded-md object-cover object-center hover:scale-105 transition-transform"
 
             />
               </div>
             {/* Product Title */}
-            <p className="text-lg font-medium">{product.title}</p>
+            <p className="text-lg font-medium">{product.name}</p>
 
             {/* Product Price */}
             <p className="text-lg font-semibold">{product.price}</p>
           </div>
+          </Link>
         ))}
       </div>
+      
 
       {/* View Collection Button */}
       <div className="pt-8 mx-auto">
