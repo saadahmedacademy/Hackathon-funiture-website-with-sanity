@@ -28,3 +28,9 @@ body {
 .footerOption nav li{
   list-style : none;
 }
+
+.loginButton:hover{
+  border: 1px solid #0a0a0a;
+  color : black;
+  background-color: white;
+}

@@ -26,7 +26,7 @@ export const NewCeremics = async () => {
             <div className="flex flex-col gap-4 items-start text-gray-600 h-[375px]">
               {/* Ceramic Image */}
               <Image
-                src={`${urlFor(ceramic.image)}`}
+                src={`${urlFor(ceramic.image).url()}`}
                 alt={`Image of ${ceramic.name}`}
                 width={305}
                 height={375}
