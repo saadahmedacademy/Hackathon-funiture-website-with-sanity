@@ -1,22 +1,13 @@
-import { getCurrentUser } from "@/sanity/lib/getCurrentuseer";
-import { ClerkLoaded, SignedIn, SignInButton } from "@clerk/nextjs";
+import { ClerkLoaded, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import React from "react";
 import { IoPersonCircleOutline, IoSearch } from "react-icons/io5";
 import { LuShoppingCart } from "react-icons/lu";
 
 export const Navbar = async () => {
-  const newUser = await getCurrentUser();
 
-  // Extract only necessary user data
-  const userData = newUser
-    ? {
-        id: newUser.id,
-        username: newUser.username,
-        imageUrl: newUser.imageUrl,
-      }
-    : null;
-
+  const user  = await currentUser();
   return (
     <header className="flex flex-col w-full bg-white">
       {/* Top Navigation Bar */}
@@ -43,9 +34,11 @@ export const Navbar = async () => {
               <Link href={"/shopping-carts"} aria-label="Shopping Cart">
                 <LuShoppingCart className="text-xl" />
               </Link>
+
+              <UserButton />
             </SignedIn>
 
-            {!userData && (
+            {!user && (
               <SignInButton mode="modal">
                 <button className="px-2 py-1 bg-black rounded-md text-white loginButton">
                   Login
