@@ -4,6 +4,7 @@ export const Category = defineType({
     name: "category",
     title: "Category",
     type: "document",
+    icon:"CategoryIcon",
     fields:[
         defineField({
             name: "name",
@@ -19,6 +20,12 @@ export const Category = defineType({
             options: {
                 source: "name",
             }
+        }),
+        defineField({
+            name: "categoryItems",
+            title: "Category Items",
+            type: "array",
+            of: [{ type: "reference", to: [{ type: "product" }] }]
         })
     ]
 })

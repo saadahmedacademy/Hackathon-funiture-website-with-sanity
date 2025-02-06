@@ -4,6 +4,7 @@ export const product = defineType({
     name: "product",
     title: "Product",
     type: "document",
+    icon:"TrolleyIcon",
     fields: [
         defineField({
             name:"category",
@@ -24,7 +25,10 @@ export const product = defineType({
             name: "slug",
             title: "Slug",
             validation: (rule) => rule.required(),
-            type: "slug"
+            type: "slug",
+            options: {
+                source: "name"
+            }
         }),
         defineField({
             name: "image",
