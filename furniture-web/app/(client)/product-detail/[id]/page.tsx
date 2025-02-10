@@ -56,7 +56,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         </section>
 
         {/* Details Section */}
-        <section className="flex flex-col items-center justify-center gap-6 py-7 px-6 md:px-14 text-gray-800 w-full md:w-1/2">
+        <section key={fetchData._id} className="flex flex-col items-center justify-center gap-6 py-7 px-6 md:px-14 text-gray-800 w-full md:w-1/2">
           {/* Title and Price */}
           <div className="w-full flex flex-col gap-1 text-left">
             <p className="text-2xl md:text-3xl text-black">{fetchData.name}</p>

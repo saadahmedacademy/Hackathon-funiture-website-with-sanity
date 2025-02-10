@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import CategoryTapBar, { TapData } from "./CategoryTapBar";
+import { urlFor } from "@/sanity/lib/image";
 
 const query = `*[_type == "category" && name == $name]{
   name,
@@ -16,28 +17,31 @@ const query = `*[_type == "category" && name == $name]{
   }
 }`;
 
+
 export const NewCeramics = () => {
   const [selectedTap, setSelectedTap] = useState<string>(TapData[0]?.title || "");
   const [ceramics, setCeramics] = useState<CeramicsItems[]>([]);
   const [loading, setLoading] = useState(false);
-  const params = { name : selectedTap };
-  
+
+  // ✅ Use useMemo to prevent unnecessary re-renders
+  // const params = useMemo(() => ({ name: selectedTap }), [selectedTap]);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data: CeramicsItems[] = await client.fetch(query, params);
-        setCeramics(data);
+        const data = await client.fetch(query, { name: selectedTap });
+        setCeramics(data.length ? data[0].products : []);
       } catch (error) {
         console.error("Error fetching ceramics:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchData();
-  }, [selectedTap]); // ✅ `query` is now outside, so it's not needed in dependencies
+  }, [selectedTap]); // Use selectedTap instead of params
+  
 
   return (
     <>
@@ -57,7 +61,7 @@ export const NewCeramics = () => {
                   {/* Ceramic Image */}
                   <div className="relative w-full h-[370px]">
                     <Image
-                      src={`/${ceramic.image}`}
+                    src={ceramic.image ? `${urlFor(ceramic.image)}` : "/placeholder.jpg"}
                       alt={`Image of ${ceramic.name}`}
                       layout="fill"
                       className="rounded-lg shadow-sm h-auto w-full"
