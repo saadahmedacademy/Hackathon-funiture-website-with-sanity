@@ -7,7 +7,7 @@ import Link from "next/link";
 export const PopularProduct = async () => {
 
   const query = `*[_type == "product"][6..9] {
-   name, price, _id ,image, title
+   name, price, _id ,image
    }`;
    
    const fatchData = await client.fetch(query);
@@ -21,7 +21,7 @@ export const PopularProduct = async () => {
 
       {/* Responsive Scrollable Layout */}
       <div className="w-full flex justify-start items-center gap-4  overflow-x-auto scroll-smooth scrollbar-hide popular-product">
-        {fatchData.map((product:any) => (
+        {fatchData.map((product:CeramicsItems) => (
       <Link href={`/product-detail/${product._id}`} key={product._id}>
 
           <div
@@ -31,7 +31,7 @@ export const PopularProduct = async () => {
             {/* Product Image */}
             <div className="h-[375px] w-[305px]">
             <Image
-              src={`${urlFor(product.image)}`}
+              src={`/${product.image}`}
               alt={product.name}
               width={305}
               height={375}

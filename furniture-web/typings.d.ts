@@ -10,3 +10,15 @@ type CeramicsItems = {
       };
     }; 
   }
+
+  interface ProductDetail {
+    _id: string;
+    name: string;
+    price: number;
+    image: string;
+    dimensions: string;  // Adjust the type based on actual data (string, object, etc.)
+    features: string[];
+    description: string;
+    quantity: number;
+  }
+  

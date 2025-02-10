@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { NewCeremics } from "@/components/NewCeremics";
+import { NewCeramics } from "@/components/NewCeremics";
 import { FeaturesSection } from "@/components/FeaturesSection";
 import { SignUp } from "@/components/SignUp";
 import { client } from "@/sanity/lib/client";
@@ -70,8 +70,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               {fetchData.description}
             </p>
             <ul className="list-disc pl-5 text-sm md:text-base">
-              {fetchData.features.map((feature: any) => (
-                <li key={feature}>{feature}</li>
+              {fetchData.features.map((feature: ProductDetail) => (
+                <li key={feature._id}>{feature.features}</li>
               ))}
             </ul>
           </div>
@@ -116,7 +116,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         </section>
       </main>
-      <NewCeremics />
+      <NewCeramics />
       <FeaturesSection />
       <SignUp />
     </>
