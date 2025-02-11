@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import CategoryTapBar, { TapData } from "./CategoryTapBar";
@@ -64,7 +64,7 @@ export const NewCeramics = () => {
                     src={ceramic.image ? `${urlFor(ceramic.image)}` : "/placeholder.jpg"}
                       alt={`Image of ${ceramic.name}`}
                       layout="fill"
-                      className="rounded-lg shadow-sm h-auto w-full"
+                      className="rounded-lg shadow-sm h-auto "
                       loading="lazy"
                     />
                   </div>
@@ -73,7 +73,7 @@ export const NewCeramics = () => {
                   <p className="text-lg font-medium">{ceramic.name}</p>
 
                   {/* Ceramic Price */}
-                  <p className="text-lg font-semibold">{ceramic.price}</p>
+                  <p className="text-lg font-semibold">Price: ${ceramic.price}</p>
                 </div>
               </Link>
             ))}

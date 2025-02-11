@@ -70,8 +70,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               {fetchData.description}
             </p>
             <ul className="list-disc pl-5 text-sm md:text-base">
-              {fetchData.features.map((feature: ProductDetail) => (
-                <li key={feature._id}>{feature.features}</li>
+              {fetchData.features.map((feature: string[] , index:number) => (
+                <li key={index}>{feature}</li>
               ))}
             </ul>
           </div>

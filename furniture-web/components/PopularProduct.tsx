@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { client } from "@/sanity/lib/client";
 import Link from "next/link";
+import { urlFor } from "@/sanity/lib/image";
 
 export const PopularProduct = async () => {
 
@@ -30,7 +31,7 @@ export const PopularProduct = async () => {
             {/* Product Image */}
             <div className="h-[375px] w-[305px]">
             <Image
-              src={`/${product.image}`}
+              src={`${urlFor(product.image)}`}
               alt={product.name}
               width={305}
               height={375}
@@ -42,7 +43,7 @@ export const PopularProduct = async () => {
             <p className="text-lg font-medium">{product.name}</p>
 
             {/* Product Price */}
-            <p className="text-lg font-semibold">{product.price}</p>
+            <p className="text-lg font-semibold">Price: ${product.price}</p>
           </div>
           </Link>
         ))}
