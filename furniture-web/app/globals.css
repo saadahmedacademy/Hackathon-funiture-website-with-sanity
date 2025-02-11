@@ -17,6 +17,7 @@
 body::-webkit-scrollbar , .popular-product::-webkit-scrollbar {
   width: 0px;
   background:transparent;
+  border: 1px solid red;
 }
 
 body {
