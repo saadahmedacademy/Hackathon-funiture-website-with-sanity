@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 import { NewCeramics } from "@/components/NewCeremics";
 import { FeaturesSection } from "@/components/FeaturesSection";
-import { SignUp } from "@/components/SignUp";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -40,6 +39,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     return <p>Item not found</p>;
   }
 
+
+  const discountPercentage  = Math.floor( Math.random()*10 ) + 1; 
+  const discountAmount = ( discountPercentage / 100 ) * fetchData.price;
+  const discountPrice = fetchData.price - discountAmount;
   return (
     <>
       <main className="w-full flex flex-col md:flex-row md:py-5 md:mx-auto h-auto">
@@ -60,7 +63,9 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           {/* Title and Price */}
           <div className="w-full flex flex-col gap-1 text-left">
             <p className="text-2xl md:text-3xl text-black">{fetchData.name}</p>
-            <p className="text-xl font-semibold">Price : {fetchData.price}$</p>
+            <p className="text-xl font-semibold">Original Price : ${fetchData.price}</p>
+            <p className="text-xl font-semibold">Discount : %{discountPercentage} (${discountAmount.toFixed(2)} off)</p>
+            <p className="text-xl font-bold text-green-600">Final Price : ${discountPrice.toFixed(2)}</p>
           </div>
 
           {/* Description */}
@@ -118,7 +123,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       </main>
       <NewCeramics />
       <FeaturesSection />
-      <SignUp />
     </>
   );
 };

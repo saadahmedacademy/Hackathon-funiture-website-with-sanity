@@ -85,7 +85,7 @@ export const NewCeramics = () => {
       </Link>
     ))
   ) : (
-    <div className="flex items-center justify-center gap-2 w-[300px]">
+    <div className="flex items-center justify-center gap-2 w-full">
       <PackageOpen className="w-10 h-10 text-gray-500" />
       <p className="text-xl font-semibold text-gray-600 mt-2">No Product is available now</p>
     </div>

@@ -4,7 +4,7 @@ import React from "react";
 
 export const HeroBlock = () => {
   return (
-    <main className="md:container w-full md:mx-auto md:py-5 h-auto md:h-[500px] flex">
+    <main className="md:container w-full md:flex-row flex flex-col-reverse md:mx-auto md:py-5 h-auto md:h-[500px] flex">
       {/* Left Section */}
       <section className="flex flex-col items-center md:items-start justify-center py-7 px-4 lg:py-0 md:px-14 bg-[#2A254B] text-white w-full">
         {/* Text and Button */}
@@ -41,7 +41,7 @@ export const HeroBlock = () => {
             alt="chair image"
             width={500}
             height={100}
-            className="hidden md:block w-full h-full object-cover"
+            className="block w-full h-full object-cover"
           />
           </div>
     </main>
