@@ -40,8 +40,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
 
-  const discountPercentage  = Math.floor( Math.random()*10 ) + 1; 
-  const discountAmount = ( discountPercentage / 100 ) * fetchData.price;
+  const discountPercentage = Math.floor(Math.random() * 10) + 1;
+  const discountAmount = (discountPercentage / 100) * fetchData.price;
   const discountPrice = fetchData.price - discountAmount;
   return (
     <>
@@ -71,16 +71,14 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           {/* Description */}
           <div className="w-full flex flex-col gap-2">
             <p className="text-lg font-medium">Description</p>
-            <p className="text-sm md:text-base leading-relaxed">
-              {fetchData.description}
-            </p>
+            <p className="text-sm md:text-base leading-relaxed">{fetchData.description}</p>
             <ul className="list-disc pl-5 text-sm md:text-base">
-              {fetchData.features.map((feature: string[] , index:number) => (
+              {fetchData.features.map((feature: string, index: number) => (
                 <li key={index}>{feature}</li>
               ))}
             </ul>
           </div>
-
+          
           {/* Dimensions */}
           <div className="w-full flex justify-start flex-col gap-2">
             <p className="text-lg font-medium">Dimensions</p>
@@ -103,7 +101,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 {fetchData.quantity}
               </button>
             </div>
-            
+
             <div className="w-full flex items-center md:justify-start justify-center gap-2 md:flex-row flex-col flex-wrap">
               <button className="px-6 py-2 lg:w-[170px] w-[90%] rounded-md bg-blue-600 text-white text-sm md:text-base">
                 Add To Cart
@@ -112,12 +110,12 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 Order Now
               </button>
               <button className="px-6 py-2 lg:w-[170px] w-[90%] rounded-md text-white bg-[#2A254B] md:mx-0 mx-auto">
-              View collection
-            </button>
+                View collection
+              </button>
             </div>
 
             {/* View Collection Button */}
-          
+
           </div>
         </section>
       </main>
