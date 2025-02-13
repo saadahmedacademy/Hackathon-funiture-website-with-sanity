@@ -82,8 +82,8 @@ export default async function Page() {
 
       <section className="sm:container mx-auto w-full md:px-0 px-2 py-4">
         <div className="w-full grid grid-cols-2 md:grid-rows-3 grid-rows-4 md:grid-cols-4 gap-y-16 gap-6">
-          {fatchData.map((ceramic : any) => (
-            <Link href={`/product-detail/${ceramic._id}`} key={ceramic.id}>
+          {fatchData.map((ceramic : CeramicsItems) => (
+            <Link href={`/product-detail/${ceramic._id}`} key={ceramic._id}>
             <div
               key={ceramic._id}
               className="flex flex-col gap-4 items-start text-gray-600 h-[460px]"

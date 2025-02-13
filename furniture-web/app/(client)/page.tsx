@@ -2,7 +2,6 @@ import { FeaturesSection } from "@/components/FeaturesSection";
 import { HeroBlock } from "@/components/HeroBlock";
 import { NewCeramics } from "@/components/NewCeremics";
 import { PopularProduct } from "@/components/PopularProduct";
-import { SignUp } from "@/components/SignUp";
 import { StudioSection } from "@/components/StudioSection";
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
     <FeaturesSection />
     <NewCeramics />
     <PopularProduct />
-    <SignUp />
     <StudioSection />
     </>
   );

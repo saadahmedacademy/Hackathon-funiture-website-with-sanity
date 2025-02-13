@@ -1,13 +1,13 @@
 import Image from "next/image";
 import React from "react";
 import { client } from "@/sanity/lib/client";
-import { urlFor } from "@/sanity/lib/image";
 import Link from "next/link";
+import { urlFor } from "@/sanity/lib/image";
 
 export const PopularProduct = async () => {
 
   const query = `*[_type == "product"][6..9] {
-   name, price, _id ,image, title
+   name, price, _id ,image
    }`;
    
    const fatchData = await client.fetch(query);
@@ -21,7 +21,7 @@ export const PopularProduct = async () => {
 
       {/* Responsive Scrollable Layout */}
       <div className="w-full flex justify-start items-center gap-4  overflow-x-auto scroll-smooth scrollbar-hide popular-product">
-        {fatchData.map((product:any) => (
+        {fatchData.map((product:CeramicsItems) => (
       <Link href={`/product-detail/${product._id}`} key={product._id}>
 
           <div
@@ -43,7 +43,7 @@ export const PopularProduct = async () => {
             <p className="text-lg font-medium">{product.name}</p>
 
             {/* Product Price */}
-            <p className="text-lg font-semibold">{product.price}</p>
+            <p className="text-lg font-semibold">Price: ${product.price}</p>
           </div>
           </Link>
         ))}
