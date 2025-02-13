@@ -5,45 +5,46 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import CategoryTapBar, { TapData } from "./CategoryTapBar";
+import { urlFor } from "@/sanity/lib/image";
+import { Loader2 , PackageOpen } from "lucide-react";
+
+
+const query = `*[_type == "category" && name == $name]{
+  name,
+  "products": categoryItems[]->{
+    _id,
+    name,
+    price,
+    image
+  }
+}`;
 
 
 export const NewCeramics = () => {
   const [selectedTap, setSelectedTap] = useState<string>(TapData[0]?.title || "");
   const [ceramics, setCeramics] = useState<CeramicsItems[]>([]);
-  const [loading,setLoading] = useState(false);
-  console.log("ceramics", ceramics);
-  console.log("selectedTap", selectedTap);
+  const [loading, setLoading] = useState(false);
+
+  // ✅ Use useMemo to prevent unnecessary re-renders
+  // const params = useMemo(() => ({ name: selectedTap }), [selectedTap]);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const query = `*[_type == "category" && name ==$name]{
-          name,
-          "products": categoryItems[]->{
-            _id,
-            name,
-            price,
-            image
-          }
-        }`;
-
-        const params = { name: selectedTap };
-        const data: CeramicsItems[] = await client.fetch(query , params);
-        setCeramics( await data);
+        const data = await client.fetch(query, { name: selectedTap });
+        setCeramics(data.length ? data[0].products : []);
       } catch (error) {
         console.error("Error fetching ceramics:", error);
-        setLoading(false);
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
-  
-    if (selectedTap) { // Prevent fetching on first render if empty
-      fetchData();
-    }
-  }, [selectedTap]); // Dependency added ✅
-  
+
+    fetchData();
+  }, [selectedTap]); // Use selectedTap instead of params
+
+
   return (
     <>
       <CategoryTapBar selectedTap={selectedTap} onTapSelect={setSelectedTap} />
@@ -54,31 +55,43 @@ export const NewCeramics = () => {
         </p>
 
         {/* Responsive Grid Layout */}
-        <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 pb-12">
-        {loading && <p>Loading...</p>}
-          {ceramics.map((ceramic: CeramicsItems) => (
-            <Link href={`/product-detail/${ceramic._id}`} key={ceramic._id}>
-              <div className="flex flex-col gap-4 items-start text-gray-600 h-[380px] ">
-                {/* Ceramic Image */}
-                <div className="relative w-full h-[370px]">
-                  <Image
-                    src={`/${ceramic.image}`}
-                    alt={`Image of ${ceramic.name}`}
-                    layout="fill"
-                    className="rounded-lg shadow-sm h-auto w-full"
-                    loading="lazy"
-                  />
-                </div>
+        <div className={`w-full min-h-[200px] flex items-center justify-center ${loading || !ceramics.length ? "flex items-center justify-center" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 pb-12"}`}>
+  {loading ? (
+    <div className="flex flex-col items-center">
+      <Loader2 className="w-10 h-10 text-gray-600 animate-spin" />
+      <span className="text-lg font-semibold text-gray-600 mt-2">Loading Products...</span>
+    </div>
+  ) : ceramics.length ? (
+    ceramics.map((ceramic: CeramicsItems) => (
+      <Link href={`/product-detail/${ceramic._id}`} key={ceramic._id}>
+        <div className="flex flex-col gap-4 items-start text-gray-600 h-[380px] transition duration-300 ease-in-out">
+          {/* Ceramic Image */}
+          <div className="relative w-full h-[370px]">
+            <Image
+              src={ceramic.image ? `${urlFor(ceramic.image)}` : "/placeholder.jpg"}
+              alt={`Image of ${ceramic.name}`}
+              layout="fill"
+              className="rounded-lg shadow-sm h-auto"
+              loading="lazy"
+            />
+          </div>
 
-                {/* Ceramic Title */}
-                <p className="text-lg font-medium">{ceramic.name}</p>
+          {/* Ceramic Title */}
+          <p className="text-lg font-medium">{ceramic.name}</p>
 
-                {/* Ceramic Price */}
-                <p className="text-lg font-semibold">{ceramic.price}</p>
-              </div>
-            </Link>
-          ))}
+          {/* Ceramic Price */}
+          <p className="text-lg font-semibold">Price: ${ceramic.price}</p>
         </div>
+      </Link>
+    ))
+  ) : (
+    <div className="flex items-center justify-center gap-2 w-full">
+      <PackageOpen className="w-10 h-10 text-gray-500" />
+      <p className="text-xl font-semibold text-gray-600 mt-2">No Product is available now</p>
+    </div>
+  )}
+</div>
+
 
 
         {/* View Collection Button */}

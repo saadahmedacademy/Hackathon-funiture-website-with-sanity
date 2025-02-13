@@ -1,8 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import { NewCeremics } from "@/components/NewCeremics";
+import { NewCeramics } from "@/components/NewCeremics";
 import { FeaturesSection } from "@/components/FeaturesSection";
-import { SignUp } from "@/components/SignUp";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -40,6 +39,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     return <p>Item not found</p>;
   }
 
+
+  const discountPercentage = Math.floor(Math.random() * 10) + 1;
+  const discountAmount = (discountPercentage / 100) * fetchData.price;
+  const discountPrice = fetchData.price - discountAmount;
   return (
     <>
       <main className="w-full flex flex-col md:flex-row md:py-5 md:mx-auto h-auto">
@@ -56,26 +59,26 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         </section>
 
         {/* Details Section */}
-        <section className="flex flex-col items-center justify-center gap-6 py-7 px-6 md:px-14 text-gray-800 w-full md:w-1/2">
+        <section key={fetchData._id} className="flex flex-col items-center justify-center gap-6 py-7 px-6 md:px-14 text-gray-800 w-full md:w-1/2">
           {/* Title and Price */}
           <div className="w-full flex flex-col gap-1 text-left">
             <p className="text-2xl md:text-3xl text-black">{fetchData.name}</p>
-            <p className="text-xl font-semibold">Price : {fetchData.price}$</p>
+            <p className="text-xl font-semibold">Original Price : ${fetchData.price}</p>
+            <p className="text-xl font-semibold">Discount : %{discountPercentage} (${discountAmount.toFixed(2)} off)</p>
+            <p className="text-xl font-bold text-green-600">Final Price : ${discountPrice.toFixed(2)}</p>
           </div>
 
           {/* Description */}
           <div className="w-full flex flex-col gap-2">
             <p className="text-lg font-medium">Description</p>
-            <p className="text-sm md:text-base leading-relaxed">
-              {fetchData.description}
-            </p>
+            <p className="text-sm md:text-base leading-relaxed">{fetchData.description}</p>
             <ul className="list-disc pl-5 text-sm md:text-base">
-              {fetchData.features.map((feature: any) => (
-                <li key={feature}>{feature}</li>
+              {fetchData.features.map((feature: string, index: number) => (
+                <li key={index}>{feature}</li>
               ))}
             </ul>
           </div>
-
+          
           {/* Dimensions */}
           <div className="w-full flex justify-start flex-col gap-2">
             <p className="text-lg font-medium">Dimensions</p>
@@ -98,7 +101,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 {fetchData.quantity}
               </button>
             </div>
-            
+
             <div className="w-full flex items-center md:justify-start justify-center gap-2 md:flex-row flex-col flex-wrap">
               <button className="px-6 py-2 lg:w-[170px] w-[90%] rounded-md bg-blue-600 text-white text-sm md:text-base">
                 Add To Cart
@@ -107,18 +110,17 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 Order Now
               </button>
               <button className="px-6 py-2 lg:w-[170px] w-[90%] rounded-md text-white bg-[#2A254B] md:mx-0 mx-auto">
-              View collection
-            </button>
+                View collection
+              </button>
             </div>
 
             {/* View Collection Button */}
-          
+
           </div>
         </section>
       </main>
-      <NewCeremics />
+      <NewCeramics />
       <FeaturesSection />
-      <SignUp />
     </>
   );
 };
