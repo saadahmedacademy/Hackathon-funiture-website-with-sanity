@@ -96,7 +96,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <div className="w-full flex flex-col justify-center lg:justify-start gap-3">
             {/* Amount */}
             <div className="w-full flex items-center md:justify-start justify-center gap-2 md:flex-row">
-              <p className="text-sm md:text-base md:w-[170px] w-[44%] rounded-md font-medium text-green-700 bg-green-200 px-6 py-2 text-center whitespace-nowrap">In Stock</p>
+              <p className={`text-sm md:text-base md:w-[170px] w-[44%] rounded-md font-medium px-6 py-2 text-center whitespace-nowrap ${fetchData.quantity === 0 ? "bg-red-600 text-white" : "bg-green-600 text-green-700"}`}>
+                {fetchData.quantity === 0 ? "Out of Stock" : "In Stock"}</p>
               <button className="px-6 py-2 md:w-[170px] w-[44%] rounded-md bg-gray-200 text-sm md:text-base">
                 {fetchData.quantity}
               </button>

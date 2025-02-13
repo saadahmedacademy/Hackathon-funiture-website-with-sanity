@@ -1,6 +1,7 @@
 type CeramicsItems = {
     name:string,
     price:number,
+    quantity:number,
     _id:string
     image: {
       _type: "image";

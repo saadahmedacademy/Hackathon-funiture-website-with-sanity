@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import CategoryTapBar, { TapData } from "./CategoryTapBar";
@@ -15,7 +15,8 @@ const query = `*[_type == "category" && name == $name]{
     _id,
     name,
     price,
-    image
+    image,
+    quantity
   }
 }`;
 
@@ -25,25 +26,23 @@ export const NewCeramics = () => {
   const [ceramics, setCeramics] = useState<CeramicsItems[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // ✅ Use useMemo to prevent unnecessary re-renders
-  // const params = useMemo(() => ({ name: selectedTap }), [selectedTap]);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const data = await client.fetch(query, { name: selectedTap });
+      setCeramics(data.length ? data[0].products : []);
+    } catch (error) {
+      console.error("Error fetching ceramics:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedTap]);
+  
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const data = await client.fetch(query, { name: selectedTap });
-        setCeramics(data.length ? data[0].products : []);
-      } catch (error) {
-        console.error("Error fetching ceramics:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
-  }, [selectedTap]); // Use selectedTap instead of params
-
+  }, [fetchData]);
 
   return (
     <>
@@ -55,7 +54,8 @@ export const NewCeramics = () => {
         </p>
 
         {/* Responsive Grid Layout */}
-        <div className={`w-full min-h-[200px] flex items-center justify-center ${loading || !ceramics.length ? "flex items-center justify-center" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 pb-12"}`}>
+        <div className={`w-full min-h-[200px] ${loading || !ceramics.length ? "flex items-center justify-center" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 pb-12"}`}>
+
   {loading ? (
     <div className="flex flex-col items-center">
       <Loader2 className="w-10 h-10 text-gray-600 animate-spin" />
@@ -70,7 +70,7 @@ export const NewCeramics = () => {
             <Image
               src={ceramic.image ? `${urlFor(ceramic.image)}` : "/placeholder.jpg"}
               alt={`Image of ${ceramic.name}`}
-              layout="fill"
+              fill
               className="rounded-lg shadow-sm h-auto"
               loading="lazy"
             />
@@ -81,6 +81,19 @@ export const NewCeramics = () => {
 
           {/* Ceramic Price */}
           <p className="text-lg font-semibold">Price: ${ceramic.price}</p>
+
+          {/* Add to cart buttton */}
+          <button 
+  className={`px-6 py-3 w-full border border-gray-300 rounded-lg transition-all ${
+    ceramic.quantity === 0 
+    ? "bg-gray-200 text-gray-500 cursor-not-allowed" 
+    : "text-gray-600 hover:bg-gray-200 hover:text-gray-800"
+  }`} 
+  disabled={!ceramic.quantity || ceramic.quantity <= 0}
+>
+  {ceramic.quantity === 0 ? "Out of Stock" : "Add to Cart"}
+</button>
+
         </div>
       </Link>
     ))
