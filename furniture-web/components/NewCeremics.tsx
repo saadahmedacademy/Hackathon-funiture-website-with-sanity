@@ -6,7 +6,8 @@ import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import CategoryTapBar, { TapData } from "./CategoryTapBar";
 import { urlFor } from "@/sanity/lib/image";
-import { Loader2 , PackageOpen } from "lucide-react";
+import { Loader2, PackageOpen } from "lucide-react";
+import { AddToCartButton } from "./AddToCartButton";
 
 
 const query = `*[_type == "category" && name == $name]{
@@ -38,7 +39,7 @@ export const NewCeramics = () => {
       setLoading(false);
     }
   }, [selectedTap]);
-  
+
 
   useEffect(() => {
     fetchData();
@@ -56,54 +57,45 @@ export const NewCeramics = () => {
         {/* Responsive Grid Layout */}
         <div className={`w-full min-h-[200px] ${loading || !ceramics.length ? "flex items-center justify-center" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 pb-12"}`}>
 
-  {loading ? (
-    <div className="flex flex-col items-center">
-      <Loader2 className="w-10 h-10 text-gray-600 animate-spin" />
-      <span className="text-lg font-semibold text-gray-600 mt-2">Loading Products...</span>
-    </div>
-  ) : ceramics.length ? (
-    ceramics.map((ceramic: CeramicsItems) => (
-      <Link href={`/product-detail/${ceramic._id}`} key={ceramic._id}>
-        <div className="flex flex-col gap-4 items-start text-gray-600 h-[380px] transition duration-300 ease-in-out">
-          {/* Ceramic Image */}
-          <div className="relative w-full h-[370px]">
-            <Image
-              src={ceramic.image ? `${urlFor(ceramic.image)}` : "/placeholder.jpg"}
-              alt={`Image of ${ceramic.name}`}
-              fill
-              className="rounded-lg shadow-sm h-auto"
-              loading="lazy"
-            />
-          </div>
+          {loading ? (
+            <div className="flex flex-col items-center">
+              <Loader2 className="w-10 h-10 text-gray-600 animate-spin" />
+              <span className="text-lg font-semibold text-gray-600 mt-2">Loading Products...</span>
+            </div>
+          ) : ceramics.length ? (
+            ceramics.map((ceramic: CeramicsItems) => (
+              <Link href={`/product-detail/${ceramic._id}`} key={ceramic._id}>
+                <div className="flex flex-col gap-4 items-start text-gray-600 h-[380px] transition duration-300 ease-in-out">
+                  {/* Ceramic Image */}
+                  <div className="relative w-full h-[370px]">
+                    <Image
+                      src={ceramic.image ? `${urlFor(ceramic.image)}` : "/placeholder.jpg"}
+                      alt={`Image of ${ceramic.name}`}
+                      fill
+                      className="rounded-lg shadow-sm h-full"
+                      loading="lazy"
+                    />
+                  </div>
+                  {/* Ceramic Title */}
+                  <p className="text-lg font-medium">{ceramic.name}</p>
 
-          {/* Ceramic Title */}
-          <p className="text-lg font-medium">{ceramic.name}</p>
+                  {/* Ceramic Price */}
+                  <p className="text-lg font-semibold">Price: ${ceramic.price}</p>
 
-          {/* Ceramic Price */}
-          <p className="text-lg font-semibold">Price: ${ceramic.price}</p>
+                  {/* Add to cart buttton */}
+                  <AddToCartButton product={ceramic} />
 
-          {/* Add to cart buttton */}
-          <button 
-  className={`px-6 py-3 w-full border border-gray-300 rounded-lg transition-all ${
-    ceramic.quantity === 0 
-    ? "bg-gray-200 text-gray-500 cursor-not-allowed" 
-    : "text-gray-600 hover:bg-gray-200 hover:text-gray-800"
-  }`} 
-  disabled={!ceramic.quantity || ceramic.quantity <= 0}
->
-  {ceramic.quantity === 0 ? "Out of Stock" : "Add to Cart"}
-</button>
 
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className="flex items-center justify-center gap-2 w-full">
+              <PackageOpen className="w-10 h-10 text-gray-500" />
+              <p className="text-xl font-semibold text-gray-600 mt-2">No Product is available now</p>
+            </div>
+          )}
         </div>
-      </Link>
-    ))
-  ) : (
-    <div className="flex items-center justify-center gap-2 w-full">
-      <PackageOpen className="w-10 h-10 text-gray-500" />
-      <p className="text-xl font-semibold text-gray-600 mt-2">No Product is available now</p>
-    </div>
-  )}
-</div>
 
 
 
