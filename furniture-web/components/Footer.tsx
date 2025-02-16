@@ -1,9 +1,13 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaPinterest, FaSkype, FaTwitter } from "react-icons/fa";
+import { FooterTop } from "./FooterTop";
 
 export const Footer = () => {
   return (
-    <>
+    <> 
+    <section className="container mx-auto py-4  ">
+      <FooterTop />
+    </section>
       <footer className="w-full h-auto bg-[#2A254B] flex flex-col text-white">
         <main className="container mx-auto border-b py-8 flex md:flex-row flex-col">
           <div className="w-full md:w-[50%] px-6 grid grid-cols-2 md:grid-cols-3">
@@ -61,7 +65,7 @@ export const Footer = () => {
         </main>
 
         <div className="container mx-auto p-4 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-lg">© 2022 Avion LTD</p>
+          <p className="text-lg">© 2025 Avion LTD</p>
           <div className="flex items-center gap-3">
             <FaLinkedin aria-label="LinkedIn" />
             <FaFacebook aria-label="Facebook" />
