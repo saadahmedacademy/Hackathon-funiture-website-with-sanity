@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.10.6",
+    "@radix-ui/react-dialog": "^1.1.6",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.70.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lucide-react": "^0.474.0",
     "next": "^15.1.5",
     "next-sanity": "^9.8.38",
@@ -20,7 +23,9 @@
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
     "sanity": "^3.70.0",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",

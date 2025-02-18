@@ -33,7 +33,7 @@ export const FooterTop = () => {
     ];
 
     return (
-        <main className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4 px-3 py-4">
+        <main className="w-full grid grid-cols-2 lg:grid-cols-4 gap-4 px-3 py-4 border-y">
             {FooterTopData.map((item, index) => (
                 <ContactItems key={index} title={item.title} subtitle={item.subtitle} icon={item.icon} />
             ))}
@@ -43,8 +43,8 @@ export const FooterTop = () => {
 
 const ContactItems = ({ title, subtitle, icon }: Props) => {
     return (
-        <div className="flex md:flex-row flex-col gap-3 items-center justify-center border  
-     shadow-sm hover:shadow-lg transition-shadow group rounded-md group-hover:bg-gray-50 group-hover:border-gray-300 transition-none px-2 py-2  ">
+        <div className="flex md:flex-row flex-col gap-3 items-center justify-center   
+     hover:shadow-lg transition-shadow group rounded-md group-hover:bg-gray-50 group-hover:border-gray-300 transition-none px-2 py-2  ">
             <span className='md:pt-1 pt-0'>{icon}</span>
             <div className="flex flex-col items-center justify-center gap-2 font-semibold text-gray-900">
                 <h3 className="font-semibold text-gray-900">{title}</h3>
@@ -52,4 +52,4 @@ const ContactItems = ({ title, subtitle, icon }: Props) => {
             </div>
         </div>
     );
-};
+}; 
