@@ -2,8 +2,9 @@ import { ClerkLoaded, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import React from "react";
-import { IoPersonCircleOutline, IoSearch } from "react-icons/io5";
+import { IoPersonCircleOutline } from "react-icons/io5";
 import { LuShoppingCart } from "react-icons/lu";
+import { SearchBar } from "./SearchBar";
 
 export const Navbar = async () => {
 
@@ -12,18 +13,18 @@ export const Navbar = async () => {
     <header className="flex flex-col w-full bg-white">
       {/* Top Navigation Bar */}
       <nav className="h-1/2 border-b w-full flex items-center justify-between px-4 py-2 gap-2">
-        <Link href={"/productlisting"} className="md:flex hidden" aria-label="Search">
-          <IoSearch className="text-xl" />
-        </Link>
+        <span className="md:flex hidden" aria-label="Search">
+          <SearchBar />
+        </span>
 
         <Link href={"/"}>
           <h1 className="text-[24px] text-[#22202E]" aria-label="Logo">Avion</h1>
         </Link>
 
         <div className="flex items-center gap-3">
-          <Link href={"/productlisting"} className="md:hidden" aria-label="Search">
-            <IoSearch className="text-xl" />
-          </Link>
+          <span className="md:hidden" aria-label="Search">
+            <SearchBar />
+          </span>
 
           <Link href={"/about-us"} aria-label="User Account">
             <IoPersonCircleOutline className="text-xl" />

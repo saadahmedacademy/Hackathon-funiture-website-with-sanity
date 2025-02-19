@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 import { FeaturesSection } from "@/components/FeaturesSection";
-import { SignUp } from "@/components/SignUp";
 
 const Button = ({
   text,
@@ -102,7 +101,6 @@ const LandingPage = () => {
 
       {/* Features and Signup Section */}
       <FeaturesSection />
-      <SignUp />
     </div>
   );
 };
