@@ -1,13 +1,15 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 interface Props {
   product: CeramicsItems;
+  className?: string;
 }
 
-export const AddToCartButton = ({ product }: Props) => {
+export const AddToCartButton = ({ product , className}: Props) => {
   const [itemCount, setItemCount] = useState(0);
 
   // Reset count if product changes
@@ -49,11 +51,11 @@ export const AddToCartButton = ({ product }: Props) => {
   ) : (
     <button
       onClick={() => setItemCount(1)}
-      className={`px-6 py-3 w-full border border-gray-300 rounded-lg transition-all ${
+      className={cn(`px-6 py-3 w-full border border-gray-300 rounded-lg transition-all ${
         product.quantity === 0
           ? "bg-gray-200 text-gray-500 cursor-not-allowed"
           : "text-gray-600 hover:bg-gray-200 hover:text-gray-800"
-      }`}
+      }`)}
       disabled={product.quantity === 0}
     >
       {product.quantity === 0 ? "Out of Stock" : "Add to Cart"}

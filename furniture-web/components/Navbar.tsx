@@ -8,7 +8,7 @@ import { SearchBar } from "./SearchBar";
 
 export const Navbar = async () => {
 
-  const user  = await currentUser();
+  const user = await currentUser();
   return (
     <header className="flex flex-col w-full bg-white">
       {/* Top Navigation Bar */}

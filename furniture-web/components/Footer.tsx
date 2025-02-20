@@ -56,7 +56,7 @@ export const Footer = () => {
               />
               <button
                 type="submit"
-                className="h-[48px] w-[116px] px-4  text-center bg-white text-black hover:bg-[#1E1A39] transition"
+                className="h-[48px] w-[116px] px-4  text-center bg-white text-black hover:text-white hover:bg-[#1E1A39] transition"
               >
                 Sign Up
               </button>
