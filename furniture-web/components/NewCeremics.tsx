@@ -76,7 +76,7 @@ export const NewCeramics = () => {
                 <Link href={`/product-detail/${ceramic._id}`} >
                   <div className="relative w-full h-[370px]">
                     <Image
-                      src={ceramic.image ? `${urlFor(ceramic.image)}` : "/placeholder.jpg"}
+                       src={`${urlFor(ceramic.image)}`}
                       alt={`Image of ${ceramic.name}`}
                       fill
                       className="rounded-lg shadow-sm h-full object-cover"

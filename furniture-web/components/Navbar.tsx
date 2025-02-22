@@ -22,7 +22,7 @@ export const Navbar = async () => {
         </Link>
 
         <div className="flex items-center gap-3">
-          <span className="md:hidden" aria-label="Search">
+          <span className="md:hidden h-full flex items-center" aria-label="Search">
             <SearchBar />
           </span>
 

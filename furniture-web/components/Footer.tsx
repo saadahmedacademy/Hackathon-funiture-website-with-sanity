@@ -1,13 +1,21 @@
 import React from "react";
-import { FaFacebook, FaInstagram, FaLinkedin, FaPinterest, FaSkype, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaPinterest,
+  FaSkype,
+  FaTwitter,
+} from "react-icons/fa";
 import { FooterTop } from "./FooterTop";
+import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <> 
-    <section className="container mx-auto py-4  ">
-      <FooterTop />
-    </section>
+    <>
+      <section className="container mx-auto py-4  ">
+        <FooterTop />
+      </section>
       <footer className="w-full h-auto bg-[#2A254B] flex flex-col text-white">
         <main className="container mx-auto border-b py-8 flex md:flex-row flex-col">
           <div className="w-full md:w-[50%] px-6 grid grid-cols-2 md:grid-cols-3">
@@ -36,7 +44,9 @@ export const Footer = () => {
             <div className="flex flex-col gap-3">
               <h2 className="font-semibold">Our company</h2>
               <ul>
-                <li>About us</li>
+                <Link href="/aboutus">
+                  <li>About us</li>
+                </Link>
                 <li>Vacancies</li>
                 <li>Contact us</li>
                 <li>Privacy</li>
