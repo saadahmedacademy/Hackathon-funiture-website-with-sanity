@@ -19,7 +19,7 @@ export const Footer = () => {
       <footer className="w-full h-auto bg-[#2A254B] flex flex-col text-white">
         <main className="container mx-auto border-b py-8 flex md:flex-row flex-col">
           <div className="w-full md:w-[50%] px-6 grid grid-cols-2 md:grid-cols-3">
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 cursor-pointer">
               <h2 className="font-semibold">Menu</h2>
               <ul>
                 <li>New arrivals</li>
@@ -30,7 +30,7 @@ export const Footer = () => {
               </ul>
             </div>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 cursor-pointer">
               <h2 className="font-semibold">Categories</h2>
               <ul>
                 <li>Crockery</li>
@@ -41,14 +41,16 @@ export const Footer = () => {
               </ul>
             </div>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 cursor-pointer">
               <h2 className="font-semibold">Our company</h2>
               <ul>
-                <Link href="/aboutus">
+                <Link href="/about-us">
                   <li>About us</li>
                 </Link>
                 <li>Vacancies</li>
-                <li>Contact us</li>
+                <Link href="/contact-us">
+                  <li>Contact us</li>
+                </Link>
                 <li>Privacy</li>
                 <li>Returns policy</li>
               </ul>
