@@ -29,7 +29,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   let fetchData = null;
   try {
     const query = `*[_type == "product" && _id == "${id}"]  {
-      name, price, _id, image, dimensions, features, description,quantity
+      name, price, discount, _id, image, dimensions, features, description,quantity
     }[0]`;
     fetchData = await client.fetch(query);
   } catch (error) {
@@ -41,7 +41,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
 
-  const discountPercentage = Math.floor(Math.random() * 10) + 1;
+  const discountPercentage = fetchData?.discount || 0;
   const discountAmount = Math.round((discountPercentage / 100) * fetchData.price);
   const discountPrice = fetchData.price - discountAmount;
   const isOutOfStock = !fetchData.quantity || fetchData.quantity <= 0;

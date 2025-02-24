@@ -2,6 +2,7 @@ type CeramicsItems = {
     name:string,
     price:number,
     quantity:number,
+    discount:number
     _id:string
     image: {
       _type: "image";
@@ -17,9 +18,10 @@ type CeramicsItems = {
     name: string;
     price: number;
     image: string;
-    dimensions: string;  // Adjust the type based on actual data (string, object, etc.)
+    dimensions: string;  
     features: string[];
     description: string;
     quantity: number;
+    discount:number
   }
   

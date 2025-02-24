@@ -10,7 +10,7 @@ export const Navbar = async () => {
 
   const user = await currentUser();
   return (
-    <header className="flex flex-col w-full bg-white">
+    <header className="flex flex-col w-full bg-white sticky top-0 z-50">
       {/* Top Navigation Bar */}
       <nav className="h-1/2 border-b w-full flex items-center justify-between px-4 py-2 gap-2">
         <span className="md:flex hidden" aria-label="Search">
