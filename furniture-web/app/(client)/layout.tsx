@@ -4,6 +4,7 @@ import "../globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from 'react-hot-toast'
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -36,6 +37,12 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <Toaster  position="bottom-right" toastOptions={{
+            style:{
+              background:'#000000',
+              color:'#ffffff'
+            }
+          }}/>
         </body>
       </html>
     </ClerkProvider>

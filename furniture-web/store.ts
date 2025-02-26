@@ -14,8 +14,8 @@ interface CartState {
   resetCart: () => void;
   getTotalPrice: () => number;
   getSubTotalPrice: () => number;
-  //   getItemCount: (productId: string) => number;
-  //   getGroupedItems: () => CartItem[];
+  getItemCount: (productId: string) => number;
+  getGroupedItems: () => CartItem[];
 }
 
 const useCartStore = create<CartState>()(
@@ -72,26 +72,32 @@ const useCartStore = create<CartState>()(
       },
 
       // To get the total price of products
-      getTotalPrice: () => 
+      getTotalPrice: () =>
         get().items.reduce(
           (total, item) => total + (item.Product.price ?? 0) * item.quantity,
           0
         ),
 
-        getSubTotalPrice: () => {
-          return get().items.reduce((total, item) => {
-            const price = item.Product.price ?? 0;
-            const discount = ((item.Product.discount ?? 0) * price) / 100;
-            const discountedPrice = price - discount; // ✅ Corrected subtraction
-            return total + discountedPrice * item.quantity;
-          }, 0);
-        },
+      getSubTotalPrice: () => {
+        return get().items.reduce((total, item) => {
+          const price = item.Product.price ?? 0;
+          const discount = ((item.Product.discount ?? 0) * price) / 100;
+          const discountedPrice = price - discount; // ✅ Corrected subtraction
+          return total + discountedPrice * item.quantity;
+        }, 0);
+      },
 
+      // To get the items quantity
+      getItemCount: (productId) => {
+        const item = get().items.find((item) => item.Product._id === productId);
+        return item ? item?.quantity : 0;
+      },
 
-        
-      }),{ name: "cart-store" } // <-- This is now correctly placed
+      // To get the group items
+      getGroupedItems: () => get().items,
+    }),
+    { name: "cart-store" } // <-- This is now correctly placed
   )
 );
 
 export default useCartStore;
-

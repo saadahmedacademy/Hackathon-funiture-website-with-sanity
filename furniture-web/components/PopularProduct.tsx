@@ -6,7 +6,6 @@ import { urlFor } from "@/sanity/lib/image";
 import { AddToCartButton } from "./AddToCartButton";
 
 export const PopularProduct = async () => {
-
   const query = `*[_type == "product"][6..9] {
    name, price, _id ,image
    }`;
@@ -23,13 +22,12 @@ export const PopularProduct = async () => {
       {/* Responsive Scrollable Layout */}
       <div className="w-full flex justify-start items-center gap-4  overflow-x-auto scroll-smooth scrollbar-hide popular-product">
         {fatchData.map((product: CeramicsItems) => (
-          <Link href={`/product-detail/${product._id}`} key={product._id}>
-
-            <div
-              key={product._id}
-              className="flex flex-col gap-4 items-start text-gray-600 shrink-0 snap-start "
-            >
-              {/* Product Image */}
+          <div
+            key={product._id}
+            className="flex flex-col gap-4 items-start text-gray-600 shrink-0 snap-start "
+          >
+            {/* Product Image */}
+            <Link href={`/product-detail/${product._id}`}>
               <div className="h-[375px] w-[305px]">
                 <Image
                   src={`${urlFor(product.image)}`}
@@ -37,24 +35,21 @@ export const PopularProduct = async () => {
                   width={305}
                   height={375}
                   className="w-full h-full rounded-md object-cover object-center hover:scale-105 transition-transform"
-
                 />
               </div>
-              {/* Product Title */}
-              <p className="text-lg font-medium">{product.name}</p>
+            </Link>
 
-              {/* Product Price */}
-              <p className="text-lg font-semibold">Price: ${product.price}</p>
+            {/* Product Title */}
+            <p className="text-lg font-medium">{product.name}</p>
 
+            {/* Product Price */}
+            <p className="text-lg font-semibold">Price: ${product.price}</p>
 
-              {/* Add to cart buttton */}
-              <AddToCartButton product={product} />
-            </div>
-
-          </Link>
+            {/* Add to cart buttton */}
+            <AddToCartButton product={product} />
+          </div>
         ))}
       </div>
-
 
       {/* View Collection Button */}
       <div className="pt-8 mx-auto">
@@ -67,4 +62,3 @@ export const PopularProduct = async () => {
     </main>
   );
 };
-

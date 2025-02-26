@@ -16,17 +16,11 @@ const query = `*[_type == "category" && name == $name]{
     name,
     price,
     image,
-    quantity
+    quantity,
+    discount
   }
 }`;
 
-interface CeramicsItems {
-  _id: string;
-  name: string;
-  price: number;
-  image: any;
-  quantity: number;
-}
 
 export const NewCeramics = () => {
   const [selectedTap, setSelectedTap] = useState<string>(TapData[0]?.title || "");
