@@ -13,7 +13,6 @@ import {
 import { Input } from "./ui/input";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
-import { on } from "events";
 
 export const SearchBar = () => {
   const [search, setSearch] = useState<string>("");
@@ -95,7 +94,10 @@ export const SearchBar = () => {
                 <Link href={`/product-detail/${product._id}`}>
                   <div
                     key={product._id}
-                    onClick={()=> {setShowSearch(false); setSearch("")}}
+                    onClick={() => {
+                      setShowSearch(false);
+                      setSearch("");
+                    }}
                     className="flex items-center gap-2 p-1 border-b h-[160px]"
                   >
                     <div className="w-20 md:w-28 h-full flex-shrink-0">
@@ -105,7 +107,7 @@ export const SearchBar = () => {
                           alt={product.name}
                           width={200}
                           height={200}
-                          className="w-full h-full" 
+                          className="w-full h-full"
                         />
                       )}
                     </div>
@@ -122,13 +124,13 @@ export const SearchBar = () => {
                 </Link>
               ))
             ) : (
-              <div className="text-xl text-red-600 flex flex-col items-center font-medium mt-1">
+              <div className="text-xl text-red-600 flex flex-col items-center justify-center font-medium mt-1 h-full">
                 No matches found for "{search}".{" "}
                 <p>Please try something else</p>
               </div>
             )
           ) : (
-            <p className="text-xl text-green-600 text-center font-medium flex justify-center items-center gap-2 mt-1">
+            <p className="text-xl text-green-600 text-center font-medium flex justify-center items-center gap-2 h-full mt-1">
               <Search /> Explore amazing products on Avion
             </p>
           )}

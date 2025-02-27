@@ -3,11 +3,10 @@ import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import React from "react";
 import { IoPersonCircleOutline } from "react-icons/io5";
-import { LuShoppingCart } from "react-icons/lu";
 import { SearchBar } from "./SearchBar";
+import { ShoppingCartIcon } from "./ShoppingCartIcon";
 
 export const Navbar = async () => {
-
   const user = await currentUser();
   return (
     <header className="flex flex-col w-full bg-white sticky top-0 z-50">
@@ -18,22 +17,27 @@ export const Navbar = async () => {
         </span>
 
         <Link href={"/"}>
-          <h1 className="text-[24px] text-[#22202E]" aria-label="Logo">Avion</h1>
+          <h1 className="text-[24px] text-[#22202E]" aria-label="Logo">
+            Avion
+          </h1>
         </Link>
 
         <div className="flex items-center gap-3">
-          <span className="md:hidden h-full flex items-center" aria-label="Search">
+          <span
+            className="md:hidden h-full flex items-center"
+            aria-label="Search"
+          >
             <SearchBar />
           </span>
 
           <Link href={"/about-us"} aria-label="User Account">
-            <IoPersonCircleOutline className="text-xl" />
+            <IoPersonCircleOutline className="text-xl md:text-2xl" />
           </Link>
 
           <ClerkLoaded>
             <SignedIn>
               <Link href={"/shopping-carts"} aria-label="Shopping Cart">
-                <LuShoppingCart className="text-xl" />
+                <ShoppingCartIcon />
               </Link>
 
               <UserButton />
