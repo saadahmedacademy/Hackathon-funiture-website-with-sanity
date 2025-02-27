@@ -17,7 +17,7 @@ const query = `*[_type == "category" && name == $name]{
     price,
     image,
     quantity,
-    discount
+    discount,
   }
 }`;
 

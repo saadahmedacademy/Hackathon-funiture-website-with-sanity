@@ -19,7 +19,7 @@ export const AddToCartButton = ({ product, className }: Props) => {
   const [showButton, setShowButton] = useState(true);
 
   // Function to reset the state back to "Add to Cart"
-  const resetToAddButton = () => setShowButton(true);
+ const resetToAddButton = () => setShowButton(true);
 
   const handleAddProduct = () => {
     addItem(product);
@@ -38,14 +38,17 @@ export const AddToCartButton = ({ product, className }: Props) => {
       onClick={() => setShowButton(false)} // Switch to quantity panel on click
       className={cn(
         `px-6 py-3 w-full border border-gray-300 rounded-lg transition-all 
-        ${product.quantity === 0 ? "bg-gray-200 text-gray-500 cursor-not-allowed" 
-        : "text-gray-600 hover:bg-gray-200 hover:text-gray-800"}`
+        ${
+          product.quantity === 0
+            ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+            : "text-gray-600 hover:bg-gray-200 hover:text-gray-800"
+        }`
       )}
       disabled={product.quantity === 0}
     >
-{product.quantity === 0 
-  ? "Out of Stock" 
-  : `Add to Cart ${itemCount > 0 ? `(${itemCount})` : ""}`}
+      {product.quantity === 0
+        ? "Out of Stock"
+        : `Add to Cart ${itemCount > 0 ? `(${itemCount})` : ""}`}
     </button>
   ) : (
     <main className="w-full text-sm">
@@ -59,7 +62,9 @@ export const AddToCartButton = ({ product, className }: Props) => {
           >
             <Minus className="w-4 h-4" />
           </button>
-          <span className="text-base font-semibold w-5 text-center">{itemCount}</span>
+          <span className="text-base font-semibold w-5 text-center">
+            {itemCount}
+          </span>
           <button
             onClick={handleAddProduct}
             className="border border-gray-300 p-1 rounded-md disabled:opacity-50"
