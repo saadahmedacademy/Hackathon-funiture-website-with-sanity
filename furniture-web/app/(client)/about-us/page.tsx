@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { FeaturesSection } from "@/components/FeaturesSection";
+import Link from "next/link";
 
 const Button = ({
   text,
@@ -28,15 +29,18 @@ const LandingPage = () => {
       {/* Header Section */}
       <main className="md:container mx-auto w-full h-[277px] bg-white flex flex-col md:flex-row justify-center md:justify-around items-center md:px-10 px-6 py-8">
         <p className="max-w-xl text-2xl md:text-3xl font-sans text-left">
-          A brand built on the love of craftsmanship, quality, and outstanding customer service.
+          A brand built on the love of craftsmanship, quality, and outstanding
+          customer service.
         </p>
-        <div className="md:w-0 w-full pt-8 mx-auto md:mx-0">
-          <Button
-            text="View collection"
-            className="w-full md:w-[190px] bg-[#F9F9F9] hover:bg-gray-100"
-            ariaLabel="View our collection"
-          />
-        </div>
+        <Link href={"/productlisting"}>
+          <div className="md:w-0 w-full pt-8 mx-auto md:mx-0">
+            <Button
+              text="View collection"
+              className="w-full md:w-[190px] bg-[#F9F9F9] hover:bg-gray-100"
+              ariaLabel="View our collection"
+            />
+          </div>
+        </Link>
       </main>
 
       {/* Story Section */}
@@ -47,7 +51,8 @@ const LandingPage = () => {
               It started with a small idea
             </p>
             <p className="text-start text-lg md:text-xl font-sans leading-relaxed">
-              A global brand with local beginnings, our story began in a small studio in South London in early 2014.
+              A global brand with local beginnings, our story began in a small
+              studio in South London in early 2014.
             </p>
           </div>
           <Button
@@ -82,13 +87,17 @@ const LandingPage = () => {
         <section className="bg-[#F9F9F9] flex flex-col items-center md:items-start justify-center py-7 px-6 md:px-14 text-gray-800 md:w-1/2 w-full h-auto md:h-[600px]">
           <div className="flex flex-col gap-5 mb-6">
             <p className="text-xl font-sans text-black leading-relaxed">
-              Our service isn’t just personal, it’s actually hyper personally exquisite.
+              Our service isn’t just personal, it’s actually hyper personally
+              exquisite.
             </p>
             <p className="text-xl font-sans leading-relaxed">
-              When we started Avion, the idea was simple: make high-quality furniture affordable and available for the mass market.
+              When we started Avion, the idea was simple: make high-quality
+              furniture affordable and available for the mass market.
             </p>
             <p className="text-xl font-sans leading-relaxed">
-              Handmade, and lovingly crafted furniture and homeware is what we live, breathe, and design, making our Chelsea boutique the hub for the London interior design community.
+              Handmade, and lovingly crafted furniture and homeware is what we
+              live, breathe, and design, making our Chelsea boutique the hub for
+              the London interior design community.
             </p>
           </div>
           <Button

@@ -7,6 +7,7 @@ import { urlFor } from "@/sanity/lib/image";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import AddToCartForDetailPage from "@/components/AddToCartForDetailPage";
+import GlobalLoading from "../../../../components/GlobalLoading";
 
 export const revalidate = 60; // seconds
   // To add the product into addToCart section
@@ -25,9 +26,8 @@ export async function generateStaticParams() {
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
-  // Handle missing ID or invalid data fetching
   if (!id) {
-    return <p className="text-2xl text-center my-auto">Loading...</p>;
+    return <GlobalLoading />;
   }
 
   let fetchData = null;

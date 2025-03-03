@@ -1,3 +1,4 @@
+
 import { FeaturesSection } from "@/components/FeaturesSection";
 import { HeroBlock } from "@/components/HeroBlock";
 import { NewCeramics } from "@/components/NewCeremics";
@@ -7,11 +8,11 @@ import { StudioSection } from "@/components/StudioSection";
 export default function Home() {
   return (
     <>
-    <HeroBlock />
-    <FeaturesSection />
-    <NewCeramics />
-    <PopularProduct />
-    <StudioSection />
+      <HeroBlock />
+      <FeaturesSection />
+      <NewCeramics />
+      <PopularProduct />
+      <StudioSection />
     </>
   );
 }

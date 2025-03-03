@@ -1,16 +1,23 @@
-import { requiredUser } from '@/hooks/requiredUser';
-import React from 'react'
+'use client';
+import GlobalLoading from '@/components/GlobalLoading';
+import React, { useState, useEffect } from 'react';
 
-const OrdersPage = async () => {
-   
-// To check the user is logged in or not
- await requiredUser();
+const OrdersPage = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if(!isClient){
+    return <GlobalLoading/>
+  }
 
   return (
-    <div>
-      gibe order
-    </div>
-  )
-}
+
+  <div>Give Order</div>
+)
+};
 
 export default OrdersPage;
+
