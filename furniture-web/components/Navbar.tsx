@@ -1,13 +1,15 @@
-import { ClerkLoaded, SignedIn, SignInButton, UserButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
+'use client';
+
+import { ClerkLoaded, SignInButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { SearchBar } from "./SearchBar";
 import { ShoppingCartIcon } from "./ShoppingCartIcon";
 
-export const Navbar = async () => {
-  const user = await currentUser();
+export const Navbar = () => {
+  const { isSignedIn } = useUser();
+
   return (
     <header className="flex flex-col w-full bg-white sticky top-0 z-50">
       {/* Top Navigation Bar */}
@@ -34,16 +36,15 @@ export const Navbar = async () => {
             <IoPersonCircleOutline className="text-xl md:text-2xl" />
           </Link>
 
+          {/* Pass SignIn correctly */}
+          <Link href={"/shopping-carts"} aria-label="Shopping Cart">
+            <ShoppingCartIcon SignIn={isSignedIn} />
+          </Link>
+
           <ClerkLoaded>
-            <SignedIn>
-              <Link href={"/shopping-carts"} aria-label="Shopping Cart">
-                <ShoppingCartIcon />
-              </Link>
-
+            {isSignedIn ? (
               <UserButton />
-            </SignedIn>
-
-            {!user && (
+            ) : (
               <SignInButton mode="modal">
                 <button className="px-2 py-1 bg-black rounded-md text-white loginButton">
                   Login
