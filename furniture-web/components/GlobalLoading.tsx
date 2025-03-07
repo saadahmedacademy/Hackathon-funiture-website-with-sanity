@@ -1,6 +1,5 @@
-"use client"; // Ensure it's a client component
-
-import { motion } from "framer-motion"; // Ensure it's `framer-motion`, not `motion/react`
+"use client"; 
+import { motion } from 'framer-motion';
 import { Loader2 } from "lucide-react";
 
 const GlobalLoading = () => {

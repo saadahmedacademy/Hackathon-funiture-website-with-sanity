@@ -130,9 +130,10 @@ export const SearchBar = () => {
               </div>
             )
           ) : (
-            <p className="text-xl text-green-600 text-center font-medium flex justify-center items-center gap-2 h-full mt-1">
-              <Search /> Explore amazing products on Avion
-            </p>
+            <p className="text-xl text-green-600 text-center font-medium flex flex-col sm:flex-row justify-center items-center h-full ">
+            <Search className="w-5 h-5 sm:mr-2 sm:mb-0 mb-4" />
+            Explore amazing products on Avion
+          </p>
           )}
         </section>
       </DialogContent>

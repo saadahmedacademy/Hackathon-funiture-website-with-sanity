@@ -1,16 +1,21 @@
 "use client";
 import GlobalLoading from "@/components/GlobalLoading";
 import { NoCartAccess } from "@/components/NoCartAcess";
-import { Card } from "@/components/ui/card";
 import { urlFor } from "@/sanity/lib/image";
 import useCartStore from "@/store";
 import { useAuth, useUser } from "@clerk/nextjs";
-import { Minus, Plus } from "lucide-react";
+import { DeleteIcon, Heart, Minus, Plus, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Page = () => {
   const [isClient, setIsClient] = useState(false);
@@ -39,19 +44,32 @@ const Page = () => {
     <div className="w-full bg-[#F9F9F9] text-[#2A254B] min-h-screen">
       <main className="md:container mx-auto flex flex-col px-6 py-10 gap-6">
         <section className="w-full">
-          <h1 className="text-3xl font-semibold">Your Shopping Cart</h1>
+          <h1 className="text-3xl font-semibold flex items-center gap-1.5">
+            {" "}
+            <ShoppingBag className="text-lg" /> Your Shopping Cart{" "}
+          </h1>
         </section>
 
         {items.length === 0 ? (
           <div className="w-full min-h-[60vh] flex items-center justify-center">
-            <Card className="py-10 w-[90%] max-w-md flex flex-col items-center gap-4 shadow-lg rounded-lg bg-white">
-              <Image
-                src="/popularProduct/emptyCard.webp" // Add an empty cart illustration
-                alt="Empty Cart"
-                width={150}
-                height={150}
-                className="opacity-80"
-              />
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="py-10 w-[90%] max-w-md flex flex-col items-center gap-4 shadow-lg rounded-lg bg-white"
+            >
+              <motion.div
+                animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <Image
+                  src="/popularProduct/emptyCard.webp" // Add an empty cart illustration
+                  alt="Empty Cart"
+                  width={150}
+                  height={150}
+                  className="opacity-80"
+                />
+              </motion.div>
               <p className="text-center text-lg font-semibold text-gray-700">
                 Your cart is empty!
               </p>
@@ -63,7 +81,7 @@ const Page = () => {
                   Shop Now
                 </button>
               </Link>
-            </Card>
+            </motion.div>
           </div>
         ) : (
           <>
@@ -135,12 +153,18 @@ const Page = () => {
                         ).toFixed(2)}
                       </td>
                       <td className="text-center">
-                        <button
-                          onClick={() => removeCartItem(item.Product._id)}
-                          className="text-red-500 hover:underline"
-                        >
-                          Remove
-                        </button>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className=''>
+                              <DeleteIcon
+                              className="text-lg hover:text-red-600 cursor-pointer"
+                              onClick={()=> removeCartItem(item.Product._id)} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Remove Card</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </td>
                     </tr>
                   ))}
