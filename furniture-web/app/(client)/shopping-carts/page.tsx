@@ -4,7 +4,7 @@ import { NoCartAccess } from "@/components/NoCartAcess";
 import { urlFor } from "@/sanity/lib/image";
 import useCartStore from "@/store";
 import { useAuth, useUser } from "@clerk/nextjs";
-import { DeleteIcon, Heart, Minus, Plus, ShoppingBag } from "lucide-react";
+import { Heart, Minus, Plus, ShoppingBag, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,10 +16,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  createCheckoutSession,
+  MetaData,
+} from "@/action/createCheckoutSession";
 
 const Page = () => {
   const [isClient, setIsClient] = useState(false);
-  const user = useUser();
+  const { user } = useUser();
   const { isSignedIn } = useAuth();
 
   const {
@@ -29,6 +33,7 @@ const Page = () => {
     removeCartItem,
     addItem,
     removeItem,
+    resetCart,
   } = useCartStore();
 
   useEffect(() => {
@@ -39,6 +44,29 @@ const Page = () => {
   if (!isClient) {
     return <GlobalLoading />;
   }
+
+  // To handle the checkout
+  const handleCheckout = async () => {
+    setIsClient(true);
+    try {
+      const metaData: MetaData = {
+        orderNumber: crypto.randomUUID(),
+        customerName: user?.fullName ?? "Unknown",
+        customerEmail: user?.emailAddresses[0]?.emailAddress ?? "Unknown",
+        clerkUserId: user?.id,
+      };
+
+      const checkoutUrl = await createCheckoutSession(items, metaData);
+
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (error) {
+      console.log(`Error creating whilw checkout session \n ${error}`);
+    } finally {
+      setIsClient(false);
+    }
+  };
 
   return isSignedIn ? (
     <div className="w-full bg-[#F9F9F9] text-[#2A254B] min-h-screen">
@@ -51,7 +79,7 @@ const Page = () => {
         </section>
 
         {items.length === 0 ? (
-          <div className="w-full min-h-[60vh] flex items-center justify-center">
+          <div className="w-full min-h-[70vh] flex items-center justify-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -122,9 +150,16 @@ const Page = () => {
                           <p>Quantity:</p>
                           <div className="flex items-center text-base gap-2 py-1">
                             <button
-                              onClick={() => removeItem(item.Product._id)}
-                              className="border border-gray-300 p-1 rounded-md disabled:opacity-50"
+                              onClick={() => {
+                                removeItem(item.Product._id);
+                                toast.success(
+                                  `${item.Product.name.substring(0, 12)}... removed successfully`
+                                );
+                              }}
+                              className={`border border-gray-300 p-1 text-black rounded-md disabled:opacity-50 
+                             ${getItemCount(item.Product._id) <= 1 ? "border-gray-200 bg-gray-400 cursor-not-allowed" : "bg-white"}`}
                               aria-label="Decrease quantity"
+                              disabled={getItemCount(item.Product._id) <= 1}
                             >
                               <Minus className="w-4 h-4" />
                             </button>
@@ -146,24 +181,43 @@ const Page = () => {
                           </div>
                         </div>
                       </td>
-                      <td className="text-center font-semibold">
+                      <td className="text-center font-semibold mr-3">
                         $
                         {(
                           item.Product.price * getItemCount(item.Product._id)
                         ).toFixed(2)}
                       </td>
-                      <td className="text-center">
+                      <td className="text-center md:mr-2">
                         <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className=''>
-                              <DeleteIcon
-                              className="text-lg hover:text-red-600 cursor-pointer"
-                              onClick={()=> removeCartItem(item.Product._id)} />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Remove Card</p>
-                            </TooltipContent>
-                          </Tooltip>
+                          <div className="flex items-center gap-1.5">
+                            {/* For remove the card */}
+                            <Tooltip>
+                              <TooltipTrigger className="">
+                                <Trash
+                                  className="text-lg hover:text-red-600 cursor-pointer"
+                                  onClick={() => {
+                                    toast.success(
+                                      `Product Card removed successfully`
+                                    );
+                                    removeCartItem(item.Product._id);
+                                  }}
+                                />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Remove Card</p>
+                              </TooltipContent>
+                            </Tooltip>
+
+                            {/* Add to favourite */}
+                            <Tooltip>
+                              <TooltipTrigger className="">
+                                <Heart className="text-lg hover:text-green-600 cursor-pointer" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Add to favourite</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </div>
                         </TooltipProvider>
                       </td>
                     </tr>
@@ -228,32 +282,97 @@ const Page = () => {
                       ).toFixed(2)}
                     </p>
                   </div>
-                  <button
-                    onClick={() => removeCartItem(item.Product._id)}
-                    className="text-red-500 hover:underline self-end"
-                  >
-                    Remove
-                  </button>
+                  <TooltipProvider>
+                    <div className="flex items-center gap-1.5">
+                      {/* For remove the card */}
+                      <Tooltip>
+                        <TooltipTrigger className="">
+                          <Trash
+                            className="text-lg hover:text-red-600 cursor-pointer"
+                            onClick={() => {
+                              removeCartItem(item.Product._id);
+                              toast.success(
+                                `Product Card removed successfully`
+                              );
+                            }}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Remove Card</p>
+                        </TooltipContent>
+                      </Tooltip>
+
+                      {/* Add to favourite */}
+                      <Tooltip>
+                        <TooltipTrigger className="">
+                          <Heart className="text-lg hover:text-green-600 cursor-pointer" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Add to favourite</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                  </TooltipProvider>
                 </div>
               ))}
             </div>
 
-            {/* Summary Section */}
-            <section className="w-full flex justify-end">
-              <div className="flex flex-col items-end gap-2">
-                <div className="flex items-center gap-3">
-                  <p className="text-xl font-semibold">Subtotal</p>
-                  <p className="text-xl font-bold">
+            {/* Order Summary Section */}
+            <section className="bg-white shadow-md rounded-lg p-4 sm:p-6 flex flex-col md:flex-row gap-6">
+              <div className="w-full md:w-2/3">
+                <h2 className="text-xl font-semibold border-b pb-2">
+                  Order Summary
+                </h2>
+                <div className="flex justify-between py-2">
+                  <span>Subtotal</span>
+                  <span className="font-semibold">
                     ${getSubTotalPrice().toFixed(2)}
-                  </p>
+                  </span>
                 </div>
+                <div className="flex justify-between py-2">
+                  <span>Shipping</span>
+                  <span className="font-semibold">Free</span>
+                </div>
+                <div className="flex justify-between py-2 border-t pt-2">
+                  <span className="font-semibold text-lg">Total</span>
+                  <span className="font-semibold text-lg">
+                    ${getSubTotalPrice().toFixed(2)}
+                  </span>
+                </div>
+              </div>
 
-                <p className="text-gray-500 text-end text-sm">
-                  Taxes and shipping are calculated at checkout.
-                </p>
+              {/* Checkout and Payment Options */}
+              <div className="w-full h-full md:w-1/3 flex flex-col items-center gap-3">
+                {/* PayPal Logo Button */}
+                <span className=" py-2 rounded-md border border-black w-full bg-white hover:bg-transparent flex justify-center items-center cursor-pointer">
+                  <Image
+                    src={"/PayPal.svg"}
+                    width={60}
+                    height={70}
+                    alt="PayPal"
+                    className="object-center w-auto h-[30px]"
+                  />
+                </span>
 
-                <button className="bg-[#2A254B] text-white w-full md:w-[200px] py-3 px-6 rounded-md hover:bg-white hover:text-[#2A254B] border border-[#2A254B] transition-colors">
+                <button
+                  onClick={handleCheckout}
+                  className="w-full bg-[#2A254B] text-white py-3 rounded-md hover:bg-[#40396E] transition"
+                >
                   Proceed to Checkout
+                </button>
+
+                <button
+                  className="w-full bg-red-600 text-white py-3 rounded-md hover:bg-red-700 transition"
+                  onClick={() => {
+                    if (
+                      window.confirm("Do you really want to reset your cart?")
+                    ) {
+                      resetCart();
+                      toast.success("Cart reset successfully!");
+                    }
+                  }}
+                >
+                  Reset Cart
                 </button>
               </div>
             </section>

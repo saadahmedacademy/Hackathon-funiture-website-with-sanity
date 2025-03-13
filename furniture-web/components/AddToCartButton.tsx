@@ -18,24 +18,22 @@ export const AddToCartButton = ({ product, className }: Props) => {
   // State to control showing Add to Cart button or Quantity panel
   const [showButton, setShowButton] = useState(true);
 
-  // Function to reset the state back to "Add to Cart"
- const resetToAddButton = () => setShowButton(true);
 
   const handleAddProduct = () => {
     addItem(product);
     toast.success(`${product?.name.substring(0, 12)}... added successfully`);
-    resetToAddButton(); // Switch back to Add to Cart button
   };
 
   const handleRemoveProduct = () => {
     removeItem(product?._id);
     toast.success(`${product?.name.substring(0, 12)}... removed successfully`);
-    resetToAddButton(); // Switch back to Add to Cart button
   };
 
   return showButton ? (
     <button
-      onClick={() => setShowButton(false)} // Switch to quantity panel on click
+      onClick={() => {
+        handleAddProduct()
+        setShowButton(false)}} // Switch to quantity panel on click
       className={cn(
         `px-6 py-3 w-full border border-gray-300 rounded-lg transition-all 
         ${
@@ -54,11 +52,17 @@ export const AddToCartButton = ({ product, className }: Props) => {
     <main className="w-full text-sm">
       <section className="flex justify-between items-center">
         <span className="text-sm text-muted-foreground">Quantity:</span>
+        <button className="p-2 rounded-full border"
+        onClick={()=> setShowButton(true) }>Done</button>
         <div className="flex items-center text-base gap-2 py-1">
-          <button
+        <button
             onClick={handleRemoveProduct}
-            className="border border-gray-300 p-1 rounded-md disabled:opacity-50"
             aria-label="Decrease quantity"
+            className={cn(
+              `border border-gray-300 p-1 text-black rounded-md disabled:opacity-50 
+              ${itemCount <= 1 ? "border-gray-200 bg-gray-400 cursor-not-allowed" : "bg-white"}`
+            )}
+            disabled={itemCount === 0}
           >
             <Minus className="w-4 h-4" />
           </button>
