@@ -18,11 +18,12 @@ import {
 } from "@/components/ui/tooltip";
 import {
   createCheckoutSession,
-  MetaData,
+  Metadata,
 } from "@/action/createCheckoutSession";
 
 const Page = () => {
-  const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false); 
   const { user } = useUser();
   const { isSignedIn } = useAuth();
 
@@ -34,6 +35,7 @@ const Page = () => {
     addItem,
     removeItem,
     resetCart,
+    getGroupedItems,
   } = useCartStore();
 
   useEffect(() => {
@@ -45,36 +47,40 @@ const Page = () => {
     return <GlobalLoading />;
   }
 
+
   // To handle the checkout
   const handleCheckout = async () => {
-    setIsClient(true);
+    setLoading(true);
     try {
-      const metaData: MetaData = {
+      const metadata: Metadata = {
         orderNumber: crypto.randomUUID(),
-        customerName: user?.fullName ?? "Unknown",
-        customerEmail: user?.emailAddresses[0]?.emailAddress ?? "Unknown",
-        clerkUserId: user?.id,
+        customerName: user?.fullName ?? "Guest",
+        customerEmail: user?.emailAddresses[0]?.emailAddress ?? "no-email@example.com",
+        clerkUserId: user!.id ,
       };
-
-      const checkoutUrl = await createCheckoutSession(items, metaData);
+      
+      const checkoutUrl = await createCheckoutSession(getGroupedItems(), metadata);
 
       if (checkoutUrl) {
         window.location.href = checkoutUrl;
+        return;
       }
+      
     } catch (error) {
-      console.log(`Error creating whilw checkout session \n ${error}`);
-    } finally {
-      setIsClient(false);
+      console.error("Error creating checkout session:", error);
+       alert("Failed to start checkout. Please try again.");
+    }finally{
+      setLoading(false);
     }
-  };
 
+  };
+ 
   return isSignedIn ? (
     <div className="w-full bg-[#F9F9F9] text-[#2A254B] min-h-screen">
       <main className="md:container mx-auto flex flex-col px-6 py-10 gap-6">
         <section className="w-full">
           <h1 className="text-3xl font-semibold flex items-center gap-1.5">
-            {" "}
-            <ShoppingBag className="text-lg" /> Your Shopping Cart{" "}
+            <ShoppingBag className="text-lg" /> Your Shopping Cart
           </h1>
         </section>
 
@@ -125,8 +131,8 @@ const Page = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {items.map((item) => (
-                    <tr key={item.Product._id} className="border-b">
+                  {items.map((item, index) => (
+                    <tr key={item.Product._id || index} className="border-b">
                       <td className="flex gap-4 items-center py-4">
                         <Image
                           src={urlFor(item.Product.image).url()}
@@ -290,10 +296,12 @@ const Page = () => {
                           <Trash
                             className="text-lg hover:text-red-600 cursor-pointer"
                             onClick={() => {
+                              if (!item.Product?._id) {
+                                toast.error("Item not found!");
+                                return;
+                              }
+                              toast.success(`Product Card removed successfully`);
                               removeCartItem(item.Product._id);
-                              toast.success(
-                                `Product Card removed successfully`
-                              );
                             }}
                           />
                         </TooltipTrigger>
