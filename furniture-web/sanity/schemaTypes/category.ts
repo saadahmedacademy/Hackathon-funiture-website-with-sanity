@@ -4,7 +4,7 @@ export const Category = defineType({
     name: "category",
     title: "Category",
     type: "document",
-    icon:"CategoryIcon",
+    icon: "categoryIcon",
     fields:[
         defineField({
             name: "name",

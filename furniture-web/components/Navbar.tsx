@@ -6,6 +6,7 @@ import React from "react";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { SearchBar } from "./SearchBar";
 import { ShoppingCartIcon } from "./ShoppingCartIcon";
+import { ShoppingBag } from "lucide-react";
 
 export const Navbar = () => {
   const { isSignedIn } = useUser();
@@ -36,9 +37,12 @@ export const Navbar = () => {
             <IoPersonCircleOutline className="text-xl md:text-2xl" />
           </Link>
 
-          {/* Pass SignIn correctly */}
           <Link href={"/shopping-carts"} aria-label="Shopping Cart">
             <ShoppingCartIcon SignIn={isSignedIn} />
+          </Link>
+
+          <Link href={"/orders"} aria-label="Shopping Cart">
+            <ShoppingBag />
           </Link>
 
           <ClerkLoaded>

@@ -2,7 +2,6 @@
 import { CartItem } from "@/store";
 import Stripe from "stripe";
 import { urlFor } from "@/sanity/lib/image";
-
 // Define the metadata structure for orders
 export interface Metadata {
   orderNumber: string;
@@ -22,9 +21,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error("STRIPE_SECRET_KEY is not defined!");
 }
 
-console.log("Stripe secret key : " ,process.env.STRIPE_SECRET_KEY); 
-
-const stripeVersion = new Stripe(process.env.STRIPE_SECRET_KEY , {
+ const stripeApiVersion = new Stripe(process.env.STRIPE_SECRET_KEY , {
   apiVersion: "2025-02-24.acacia", 
 });
 
@@ -35,7 +32,7 @@ export async function createCheckoutSession(
 ) {
   try {
     // Fetch existing customer by email
-    const customers = await stripeVersion.customers.list({
+    const customers = await stripeApiVersion.customers.list({
       email: metadata?.customerEmail,
       limit: 1,
     });
@@ -88,7 +85,7 @@ export async function createCheckoutSession(
 
     // Create the Stripe Checkout session
     const session =
-      await stripeVersion.checkout.sessions.create(sessionPayload);
+      await stripeApiVersion.checkout.sessions.create(sessionPayload);
 
     return session.url;
   } catch (error) {

@@ -1,11 +1,11 @@
-import { rule } from "postcss";
+import { MdTrolley } from "react-icons/md";
 import { defineType, defineField } from "sanity";
 
 export const product = defineType({
   name: "product",
   title: "Product",
   type: "document",
-  icon: "TrolleyIcon",
+  icon: MdTrolley,
   fields: [
     defineField({
       name: "category",

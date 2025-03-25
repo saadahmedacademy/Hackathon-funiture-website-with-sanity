@@ -1,13 +1,14 @@
+import { ShoppingBasketIcon } from "lucide-react";
 import { defineField, defineType, defineArrayMember } from "sanity";
 
 export const orderTypes = defineType({
-  name: "orders",
+  name: "order",
   title: "Order Status",
   type: "document",
-  icon: "BasketIcon",
+  icon: ShoppingBasketIcon,
   fields: [
     defineField({
-      name: "orderNumbar",
+      name: "orderNumber",
       title: "Order Number",
       type: "string",
       validation: (rule) => rule.required(),
@@ -125,7 +126,7 @@ export const orderTypes = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Pending", value: "pending" },
+          { title: "Paid", value: "paid" },
           { title: "Shipped", value: "shipped" },
           { title: "Delivered", value: "delivered" },
           { title: "Cancelled", value: "cancelled" },
@@ -133,4 +134,21 @@ export const orderTypes = defineType({
       },
     }),
   ],
+  preview: {
+   select :{
+    name: 'customerName',
+    amount: 'totalPrice',
+    currency:'currency',
+    orderId : 'orderNumber',
+    email: 'customerEmail',
+   },
+   prepare(select){
+    const orderIdSnippet = `${select.orderId.slice(0, 5)}...${select.orderId.slice(-5)}`
+    return {
+      title: `${select.name} (${orderIdSnippet})`,
+      subtitle: `${select.amount} ${select.currency}, ${select.email}`,
+      media:ShoppingBasketIcon
+    }
+   }
+  }
 });

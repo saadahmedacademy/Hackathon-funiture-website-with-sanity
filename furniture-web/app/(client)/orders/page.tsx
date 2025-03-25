@@ -1,23 +1,34 @@
-'use client';
-import GlobalLoading from '@/components/GlobalLoading';
-import React, { useState, useEffect } from 'react';
+import { requiredUser } from "@/hooks/requiredUser";
+import { client } from "@/sanity/lib/client";
+import { defineQuery } from "next-sanity";
 
-const OrdersPage = () => {
-  const [isClient, setIsClient] = useState(false);
+const OrdersPage = async () => {
+  await requiredUser();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const getMyOrders = async (userId: string) => {
+    if (!userId) {
+      throw new Error("User id not found");
+    }
 
-  if(!isClient){
-    return <GlobalLoading/>
-  }
+    const MY_ORDERS_QUERY =
+      defineQuery(`*[_type == "order && clerkUserId == $userId] | order(orderDate desc){
+      ...products[]{
+      ...product->
+      }
+      }`);
 
-  return (
+      try {
+        const orders = await client.fetch(MY_ORDERS_QUERY, { userId });
+         
+        return orders?.data || []
+        
+      } catch (error) {
+        console.log(`Error while fatching orders \n ${error}`)
+        return []
+      }
+  };
 
-  <div>Give Order</div>
-)
+  return <div>Give Order</div>;
 };
 
 export default OrdersPage;
-
