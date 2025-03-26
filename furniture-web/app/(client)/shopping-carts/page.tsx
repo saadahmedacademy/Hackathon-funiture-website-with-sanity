@@ -22,7 +22,7 @@ import {
 } from "@/action/createCheckoutSession";
 
 const Page = () => {
-  const [isClient, setIsClient] = useState<boolean>(false);
+
   const [loading, setLoading] = useState<boolean>(false); 
   const { user } = useUser();
   const { isSignedIn } = useAuth();
@@ -37,15 +37,6 @@ const Page = () => {
     resetCart,
     getGroupedItems,
   } = useCartStore();
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // if product page is loading
-  if (!isClient) {
-    return <GlobalLoading />;
-  }
 
 
   // To handle the checkout
@@ -74,6 +65,10 @@ const Page = () => {
     }
 
   };
+
+  if(loading){
+    return <GlobalLoading />
+  }
  
   return isSignedIn ? (
     <div className="w-full bg-[#F9F9F9] text-[#2A254B] min-h-screen">
