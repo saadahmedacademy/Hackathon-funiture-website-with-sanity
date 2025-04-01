@@ -19,7 +19,7 @@ export const orderTypes = defineType({
       type: "object",
       fields: [
         { name: "id", type: "string" },
-        { name: "number", type: "string" },
+        { name: "invoice_number", type: "string" },
         { name: "invoice_url", type: "url" },
       ],
     }),

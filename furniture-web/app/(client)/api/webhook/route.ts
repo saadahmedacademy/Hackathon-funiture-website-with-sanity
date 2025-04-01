@@ -117,7 +117,7 @@ async function createOrderInSanity(
     invoice: invoice
       ? {
           id: invoice.id,
-          number: invoice.number,
+          invoice_number: invoice.number,
           invoice_url: invoice.hosted_invoice_url,
         }
       : null,

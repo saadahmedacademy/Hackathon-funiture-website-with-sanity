@@ -64,7 +64,7 @@ export async function createCheckoutSession(
             metadata: { id: item.Product._id },
             // Correct
             images: Array.isArray(item.Product.image)
-              ? item.Product.image.map((img) =>
+              ? item.Product.image.map((img:any | string) =>
                   typeof img === "string" ? img : urlFor(img).url()
                 )
               : item.Product.image
