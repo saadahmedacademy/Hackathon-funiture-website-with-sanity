@@ -1,38 +1,37 @@
+import exp from "constants";
 import { ShoppingBasketIcon } from "lucide-react";
 
-export type Invoice = {
-  id: string;
-  invoice_number: string | undefined;
-  invoice_url: string;
-};
-
-export type ProductItem = {
-  product: {
-    _ref: string; // Reference to the product document
-    _type: "reference";
-  };
-  quantity: number;
-};
 
 export type OrderStatus = "paid" | "shipped" | "delivered" | "cancelled";
 
-export type OrderSchemaType = {
-  _id: string;
+// Represents the data returned by the query (Order)
+export interface OrderSchemaType {
   orderNumber: string;
-  invoice: Invoice;
-  stripeCheckoutSessionId?: string;
-  stripeCustomerId: string;
-  clerkUserId: string;
+  orderDate: string; // ISO String or Date
   customerName: string;
   customerEmail: string;
-  stripePaymentIntentId: string;
-  products: ProductItem[];
-  totalPrice: number;
   currency: string;
-  amountDiscount: number;
-  orderDate: string; // ISO string format
-  orderStatus: OrderStatus;
-};
+  totalPrice: number;
+  invoice: {
+    invoice_number: string;
+    invoice_url: string;
+  };
+  orderStatus: string;
+  products: {
+    product: {
+      name: string;
+      price: number;
+      quantity: number;
+      image: {
+        asset: {
+          _id: string;
+          url: string;
+        };
+      };
+    };
+    quantity: number;
+  }[];
+}
 
 // Preview helper function
 export const getOrderPreview = (order: Order) => {

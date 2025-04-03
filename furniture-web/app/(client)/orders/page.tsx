@@ -33,11 +33,19 @@ const OrdersPage = async () => {
       customerEmail,
       currency,
       totalPrice,
-      invoice { invoice_number },
+      invoice { invoice_number, invoice_url },
       orderStatus,
-      products[] { product-> }
+      products[] { 
+        product-> { 
+          name, 
+          price, 
+          image { asset->{ _id, url } },
+        },
+        quantity
+      }
     }
   `;
+    
   
 
     try {

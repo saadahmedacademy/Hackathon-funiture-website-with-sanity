@@ -20,6 +20,10 @@ body {
   color : black;
   background-color: white;
 }
+.order-detail-bar::-webkit-scrollbar {
+width: 2px;
+background-color: gray;
+}
 
 .hoverEffect {
   @apply transition duration-300 ease-in-out 
