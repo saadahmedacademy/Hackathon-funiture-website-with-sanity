@@ -8,7 +8,7 @@ const ContactPage = () => {
       <section className="w-full text-center">
         <h1 className="text-4xl font-bold text-gray-900">Contact Us</h1>
         <p className="mt-2 text-gray-600">
-          We’d love to hear from you! Please fill out the form below, and we'll
+          We&apos;d love to hear from you! Please fill out the form below, and we&apos;ll
           get back to you as soon as possible.
         </p>
       </section>
@@ -20,12 +20,7 @@ const ContactPage = () => {
           <label htmlFor="name" className="font-medium text-gray-700">
             Name
           </label>
-          <Input
-            type="text"
-            id="name"
-            placeholder="Enter your name"
-            className="mt-1"
-          />
+          <Input type="text" id="name" placeholder="Enter your name" className="mt-1" />
         </div>
 
         {/* Email Input */}
@@ -33,12 +28,7 @@ const ContactPage = () => {
           <label htmlFor="email" className="font-medium text-gray-700">
             Email
           </label>
-          <Input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            className="mt-1"
-          />
+          <Input type="email" id="email" placeholder="Enter your email" className="mt-1" />
         </div>
 
         {/* Phone Input */}
@@ -46,12 +36,7 @@ const ContactPage = () => {
           <label htmlFor="phone" className="font-medium text-gray-700">
             Phone Number
           </label>
-          <Input
-            type="tel"
-            id="phone"
-            placeholder="Enter your phone number"
-            className="mt-1"
-          />
+          <Input type="tel" id="phone" placeholder="Enter your phone number" className="mt-1" />
         </div>
 
         {/* Message Textarea */}
@@ -63,7 +48,7 @@ const ContactPage = () => {
             id="message"
             rows={4}
             placeholder="Write your message here..."
-            className="mt-1 p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300 resize-none"
+            className="mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300 resize-none"
           />
         </div>
 

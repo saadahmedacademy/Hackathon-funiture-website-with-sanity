@@ -13,10 +13,11 @@ import {
 import { Input } from "./ui/input";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
+import { CeramicsItems } from "@/typings";
 
 export const SearchBar = () => {
   const [search, setSearch] = useState<string>("");
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<CeramicsItems[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
 
@@ -91,9 +92,8 @@ export const SearchBar = () => {
           ) : search ? (
             products.length > 0 ? (
               products.map((product) => (
-                <Link href={`/product-detail/${product._id}`}>
+                <Link key={product?._id} href={`/product-detail/${product._id}`}>
                   <div
-                    key={product._id}
                     onClick={() => {
                       setShowSearch(false);
                       setSearch("");
@@ -125,7 +125,7 @@ export const SearchBar = () => {
               ))
             ) : (
               <div className="text-xl text-red-600 flex flex-col items-center justify-center font-medium mt-1 h-full">
-                No matches found for "{search}".{" "}
+                {`No matches found for "${search}".`}
                 <p>Please try something else</p>
               </div>
             )

@@ -4,6 +4,7 @@ import { client } from "@/sanity/lib/client";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
 import { AddToCartButton } from "./AddToCartButton";
+import { CeramicsItems } from "@/typings";
 
 export const PopularProduct = async () => {
   const query = `*[_type == "product"][6..9] {

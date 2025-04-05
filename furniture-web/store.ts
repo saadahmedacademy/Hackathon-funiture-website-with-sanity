@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { CeramicsItems } from "./typings";
 
 export interface CartItem {
   Product: CeramicsItems;

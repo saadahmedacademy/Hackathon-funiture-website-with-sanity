@@ -2,8 +2,9 @@
 
 import React from "react";
 import useCartStore from "@/store"; // Zustand store
+import { CeramicsItems } from "@/typings";
 
-const AddToCartForDetailPage = ({ item }: { item: any }) => {
+const AddToCartForDetailPage = ({ item }: { item: CeramicsItems }) => {
   const { addItem } = useCartStore();
 
   return (

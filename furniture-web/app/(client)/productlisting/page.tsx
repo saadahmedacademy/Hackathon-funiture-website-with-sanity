@@ -5,6 +5,7 @@ import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { AddToCartButton } from "@/components/AddToCartButton";
+import { CeramicsItems } from "@/typings";
 
 export default async function Page() {
   const query = `*[_type == "product"]{

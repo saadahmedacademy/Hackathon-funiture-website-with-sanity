@@ -8,6 +8,7 @@ import CategoryTapBar, { TapData } from "./CategoryTapBar";
 import { urlFor } from "@/sanity/lib/image";
 import { Loader2, PackageOpen } from "lucide-react";
 import { AddToCartButton } from "./AddToCartButton";
+import { CeramicsItems } from "@/typings";
 
 const query = `*[_type == "category" && name == $name]{
   name,

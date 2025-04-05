@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import useCartStore from "@/store";
+import { CeramicsItems } from "@/typings";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -11,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-export const AddToCartButton = ({ product, className }: Props) => {
+export const AddToCartButton = ({ product }: Props) => {
   const { addItem, removeItem, getItemCount } = useCartStore();
   const itemCount = getItemCount(product?._id);
 
