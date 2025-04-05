@@ -16,15 +16,16 @@ const query = `*[_type == "category" && name == $name]{
     _id,
     name,
     price,
-    image,
+    image { asset->{ _id, url } },
     quantity,
     discount,
   }
 }`;
 
-
 export const NewCeramics = () => {
-  const [selectedTap, setSelectedTap] = useState<string>(TapData[0]?.title || "");
+  const [selectedTap, setSelectedTap] = useState<string>(
+    TapData[0]?.title || ""
+  );
   const [ceramics, setCeramics] = useState<CeramicsItems[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -47,67 +48,74 @@ export const NewCeramics = () => {
   return (
     <>
       <CategoryTapBar selectedTap={selectedTap} onTapSelect={setSelectedTap} />
-      <main className="md:container md:mx-auto w-full flex flex-col gap-6 py-16  px-4">
-        {/* Section Heading */}
-        <p className="text-2xl md:text-3xl font-sans font-semibold text-gray-800">
+      <main className="container mx-auto w-full flex flex-col gap-6 py-16 px-4">
+        {/* Heading */}
+        <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800">
           New Ceramics
         </p>
 
-        {/* Responsive Grid Layout */}
-        <div className={`w-full min-h-[200px] ${loading || !ceramics.length ? "flex items-center justify-center" : "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 pb-12"}`}>
+        {/* Grid / Loader / Empty */}
+        <div className={`w-full min-h-[200px] ${loading || !ceramics.length
+          ? "flex items-center justify-center"
+          : "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-12"
+          }`}
+        >
           {loading ? (
             <div className="flex flex-col items-center">
               <Loader2 className="w-10 h-10 text-gray-600 animate-spin" />
-              <span className="text-lg font-semibold text-gray-600 mt-2">Loading Products...</span>
+              <span className="text-lg font-semibold text-gray-600 mt-2">
+                Loading Products...
+              </span>
             </div>
           ) : ceramics.length ? (
-            ceramics.map((ceramic) => (
-
+            ceramics.map((product) => (
               <div
-                key={ceramic._id}
-                className="flex flex-col gap-4 items-start text-gray-600 h-[380px] transition duration-300 ease-in-out cursor-pointer"
+                key={product._id}
+                className="flex flex-col gap-3 items-start text-gray-700"
               >
-                {/* Ceramic Image */}
-                <Link href={`/product-detail/${ceramic._id}`} >
-                  <div className="relative w-full h-[370px]">
+                {/* Image */}
+                <Link href={`/product-detail/${product._id}`} className="w-full">
+                  <div className="w-full aspect-[4/5] relative overflow-hidden rounded-md shadow-sm">
                     <Image
-                       src={`${urlFor(ceramic.image)}`}
-                      alt={`Image of ${ceramic.name}`}
+                      src={`${urlFor(product.image)}`}
+                      alt={product.name}
                       fill
-                      className="rounded-lg shadow-sm h-full object-cover"
-                      loading="lazy"
+                      className="object-cover object-center hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                 </Link>
 
-                {/* Ceramic Title */}
-                <p className="text-lg font-medium">{ceramic.name}</p>
+                {/* Info */}
+                <p className="text-base sm:text-lg font-medium truncate w-full">
+                  {product.name}
+                </p>
+                <p className="text-base font-semibold w-full">
+                  Price: ${product.price}
+                </p>
 
-                {/* Ceramic Price */}
-                <p className="text-lg font-semibold">Price: ${ceramic.price}</p>
-
-                {/* Add to Cart Button 
-                   */}
-                <AddToCartButton product={ceramic} />
+                {/* Button */}
+                <AddToCartButton product={product} />
               </div>
             ))
           ) : (
             <div className="flex items-center justify-center gap-2 w-full">
               <PackageOpen className="w-10 h-10 text-gray-500" />
-              <p className="text-xl font-semibold text-gray-600 mt-2">No Product is available now</p>
+              <p className="text-xl font-semibold text-gray-600 mt-2">
+                No Product is available now
+              </p>
             </div>
           )}
         </div>
-      </main>
 
-        {/* View Collection Button */}
-        <div className="flex justify-center items-center pt-24">
+        {/* View Collection */}
+        <div className="pt-8 mx-auto">
           <Link href={`/productlisting`}>
-            <button className="px-6 py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-200 hover:text-gray-800 transition-all">
+            <button className="px-6 py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors">
               View collection
             </button>
           </Link>
         </div>
+      </main>
     </>
   );
 };
