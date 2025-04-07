@@ -52,8 +52,8 @@ export async function createCheckoutSession(
       allow_promotion_codes: true,
       payment_method_types: ["card"],
       invoice_creation: { enabled: true },
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/cart`,
+      success_url: `https://hackathon-funiture-website-with-sanity.vercel.app//success?session_id={CHECKOUT_SESSION_ID}&orderNumber=${metadata.orderNumber}`,
+      cancel_url: `https://hackathon-funiture-website-with-sanity.vercel.app//cart`,
       line_items: items.map((item) => ({
         price_data: {
           currency: "USD",
@@ -62,14 +62,17 @@ export async function createCheckoutSession(
             name: item.Product.name || "Unnamed Product",
             description: item.Product.description || "No description available.",
             metadata: { id: item.Product._id },
-            // Correct
             images: Array.isArray(item.Product.image)
-              ? item.Product.image.map((img:any | string) =>
-                  typeof img === "string" ? img : urlFor(img).url()
-                )
-              : item.Product.image
-                ? [urlFor(item.Product.image).url()] // Note: This needs to be an array
-                : [], // Empty array instead of null
+            ? item.Product.image.map((img: any | string) => {
+                try {
+                  return typeof img === "string" ? img : urlFor(img).url();
+                } catch (e) {
+                  console.error("Error generating image URL:", e);
+                  return "";
+                }
+              })
+            : [],
+          
           },
         },
         quantity: item.quantity > 0 ? item.quantity : 1, // Ensure quantity is at least 1
