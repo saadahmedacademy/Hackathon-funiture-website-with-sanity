@@ -71,7 +71,7 @@ export const NewCeramics = () => {
             ceramics.map((product) => (
               <div
                 key={product._id}
-                className="flex flex-col gap-3 items-start text-gray-700"
+                className="flex flex-col gap-3 items-start text-gray-700 min-w-0"
               >
                 {/* Image */}
                 <Link href={`/product-detail/${product._id}`} className="w-full">

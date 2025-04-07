@@ -16,9 +16,8 @@ export const AddToCartButton = ({ product }: Props) => {
   const { addItem, removeItem, getItemCount } = useCartStore();
   const itemCount = getItemCount(product?._id);
 
-  // State to control showing Add to Cart button or Quantity panel
-  const [showButton, setShowButton] = useState(true);
-
+  // Automatically show quantity panel if item is already in cart
+  const [showButton, setShowButton] = useState(itemCount === 0);
 
   const handleAddProduct = () => {
     addItem(product);
@@ -33,10 +32,11 @@ export const AddToCartButton = ({ product }: Props) => {
   return showButton ? (
     <button
       onClick={() => {
-        handleAddProduct()
-        setShowButton(false)}} // Switch to quantity panel on click
+        handleAddProduct();
+        setShowButton(false);
+      }}
       className={cn(
-        `px-6 py-3 w-full border border-gray-300 rounded-lg transition-all 
+        `px-6 py-3 w-full border border-gray-300 rounded-lg transition-all duration-300 
         ${
           product.quantity === 0
             ? "bg-gray-200 text-gray-500 cursor-not-allowed"
@@ -50,13 +50,18 @@ export const AddToCartButton = ({ product }: Props) => {
         : `Add to Cart ${itemCount > 0 ? `(${itemCount})` : ""}`}
     </button>
   ) : (
-    <main className="w-full text-sm">
-      <section className="flex justify-between items-center">
-        <span className="text-sm text-muted-foreground">Quantity:</span>
-        <button className="p-2 rounded-full border"
-        onClick={()=> setShowButton(true) }>Done</button>
-        <div className="flex items-center text-base gap-2 py-1">
-        <button
+    <main className="w-full text-sm transition-all duration-300">
+      <section className="grid grid-cols-1 sm:flex sm:justify-between sm:items-center gap-2 w-full">
+
+      <div className="flex flex-wrap items-center justify-between gap-3 w-full">
+  <span className="text-sm text-muted-foreground">Quantity:</span>
+  <button className="p-2 rounded-full border ml-auto sm:ml-0" onClick={() => setShowButton(true)}>
+    Done
+  </button>
+</div>
+
+        <div className="flex items-center text-base gap-2 py-2">
+          <button
             onClick={handleRemoveProduct}
             aria-label="Decrease quantity"
             className={cn(
@@ -72,7 +77,7 @@ export const AddToCartButton = ({ product }: Props) => {
           </span>
           <button
             onClick={handleAddProduct}
-            className="border border-gray-300 p-1 rounded-md disabled:opacity-50"
+            className="border border-gray-300 p-1 rounded-md disabled:opacity-50 hover:bg-gray-100"
             aria-label="Increase quantity"
           >
             <Plus className="w-4 h-4" />
@@ -80,9 +85,11 @@ export const AddToCartButton = ({ product }: Props) => {
         </div>
       </section>
 
-      <div className="flex justify-between items-center border border-gray-300 p-2 w-full mt-2">
-        <span>Subtotal:</span>
-        <span>${(product.price * itemCount).toFixed(2)}</span>
+      <div className="flex justify-between items-center border border-gray-300 bg-gray-50 p-2 w-full mt-3 rounded-md">
+        <span className="text-gray-600 font-medium">Subtotal:</span>
+        <span className="text-black font-semibold">
+          ${(product.price * itemCount).toFixed(2)}
+        </span>
       </div>
     </main>
   );
