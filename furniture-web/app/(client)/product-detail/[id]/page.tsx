@@ -9,7 +9,6 @@ import AddToCartForDetailPage from "@/components/AddToCartForDetailPage";
 import GlobalLoading from "../../../../components/GlobalLoading";
 
 export const revalidate = 60; // seconds
-  // To add the product into addToCart section
 
 export async function generateStaticParams() {
   const query = `*[_type=='product']{
