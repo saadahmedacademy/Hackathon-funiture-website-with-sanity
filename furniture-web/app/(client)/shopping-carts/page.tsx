@@ -347,7 +347,9 @@ const Page = () => {
               {/* Checkout and Payment Options */}
               <div className="w-full h-full md:w-1/3 flex flex-col items-center gap-3">
                 {/* PayPal Logo Button */}
-                <span className=" py-2 rounded-md border border-black w-full bg-white hover:bg-transparent flex justify-center items-center cursor-pointer">
+                <span 
+                onClick={handleCheckout}
+                className=" py-2 rounded-md border border-black w-full bg-white hover:bg-transparent flex justify-center items-center cursor-pointer">
                   <Image
                     src={"/PayPal.svg"}
                     width={60}

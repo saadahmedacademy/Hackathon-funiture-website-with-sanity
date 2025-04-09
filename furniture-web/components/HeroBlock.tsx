@@ -4,7 +4,7 @@ import React from "react";
 
 export const HeroBlock = () => {
   return (
-    <main className="md:container w-full md:flex-row flex flex-col-reverse md:mx-auto md:py-5 h-auto md:h-[500px] flex">
+    <main className="md:container w-full md:flex-row flex flex-col-reverse md:mx-auto md:py-5 h-auto md:h-[500px] ">
       {/* Left Section */}
       <section className="flex flex-col items-center md:items-start justify-center py-7 px-4 lg:py-0 md:px-14 bg-[#2A254B] text-white w-full">
         {/* Text and Button */}
@@ -15,9 +15,9 @@ export const HeroBlock = () => {
             with timeless designs
           </p>
           <Link href="/productlisting">
-          <button className="md:block hidden bg-[#F9F9F926] py-3 px-10 md:py-4 md:px-6 hover:bg-[#ffffff26] transition-colors">
-            View collection
-          </button>
+            <button className="md:block hidden bg-[#F9F9F926] py-3 px-10 md:py-4 md:px-6 hover:bg-[#ffffff26] transition-colors">
+              View collection
+            </button>
           </Link>
         </div>
 
@@ -29,21 +29,23 @@ export const HeroBlock = () => {
           </p>
         </div>
 
-        <button className="md:hidden block bg-[#F9F9F926] w-[93%] py-3 px-10 md:py-4 md:px-6 hover:bg-[#ffffff26] transition-colors">
-          View collection
-        </button>
+        <Link href="/productlisting">
+          <button className="md:hidden block bg-[#F9F9F926] w-[93%] py-3 px-10 md:py-4 md:px-6 hover:bg-[#ffffff26] transition-colors">
+            View collection
+          </button>
+        </Link>
       </section>
 
       {/* Right Section */}
       <div className="md:w-1/2">
-          <Image
-            src="/mainChair.svg"
-            alt="chair image"
-            width={500}
-            height={100}
-            className="block w-full h-full object-cover"
-          />
-          </div>
+        <Image
+          src="/mainChair.svg"
+          alt="chair image"
+          width={500}
+          height={100}
+          className="block w-full h-full object-cover"
+        />
+      </div>
     </main>
   );
 };

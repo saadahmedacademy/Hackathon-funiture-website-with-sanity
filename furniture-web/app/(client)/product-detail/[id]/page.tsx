@@ -132,9 +132,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
 
             <div className="w-full flex items-center md:justify-start justify-center gap-2 lg:flex-row flex-col flex-wrap">
-              <Link href={"/shopping-carts"}>
               <AddToCartForDetailPage item={fetchData} />
-              </Link>
               <button className="px-6 py-2 lg:w-[170px] w-[90%] rounded-md bg-purple-700 text-white text-sm md:text-base">
                 Order Now
               </button>

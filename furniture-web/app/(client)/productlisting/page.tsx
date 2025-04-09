@@ -81,7 +81,7 @@ export default async function Page() {
                     alt={ceramic.name}
                     width={305}
                     height={375}
-                    className="rounded-lg shadow-sm w-full h-full object-cover"
+                    className="rounded-lg shadow-sm w-full h-full "
                   />
                 </div>
 
@@ -89,7 +89,7 @@ export default async function Page() {
                 <Link href={`/product-detail/${ceramic._id}`} key={ceramic._id}>
                   <p className="text-lg font-medium hover:underline">{ceramic.name}</p>
                 </Link>
-                <p className="text-lg font-semibold">{ceramic.price}</p>
+                <p className="text-lg font-semibold">{ceramic.price}$</p>
               </div>
               <AddToCartButton product={ceramic} />
             </main>
