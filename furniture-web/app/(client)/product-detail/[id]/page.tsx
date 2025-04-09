@@ -5,7 +5,6 @@ import { FeaturesSection } from "@/components/FeaturesSection";
 import { client } from "@/sanity/lib/client";
 import { urlFor } from "@/sanity/lib/image";
 import { Heart } from "lucide-react";
-import Link from "next/link";
 import AddToCartForDetailPage from "@/components/AddToCartForDetailPage";
 import GlobalLoading from "../../../../components/GlobalLoading";
 
